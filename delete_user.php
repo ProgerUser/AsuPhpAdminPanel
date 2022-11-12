@@ -17,7 +17,7 @@ if ($del_id && $_SERVER['REQUEST_METHOD'] == 'POST') {
     $db->where('id', $del_id);
     $stat = $db->delete('admin_accounts');
     if ($stat) {
-        $_SESSION['info'] = "User deleted successfully!";
+        $_SESSION['info'] = "Пользователь успешно удален!";
         header('location: admin_users.php');
         exit;
     }

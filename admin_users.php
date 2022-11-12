@@ -71,11 +71,11 @@ include BASE_PATH.'/includes/header.php';
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-6">
-            <h1 class="page-header">Admin users</h1>
+            <h1 class="page-header">Пользователи-администраторы</h1>
         </div>
         <div class="col-lg-6">
             <div class="page-action-links text-right">
-                <a href="add_admin.php" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Add new</a>
+                <a href="add_admin.php" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Добавить</a>
             </div>
         </div>
     </div>
@@ -84,16 +84,16 @@ include BASE_PATH.'/includes/header.php';
     <?php
     if (isset($del_stat) && $del_stat == 1)
     {
-        echo '<div class="alert alert-info">Successfully deleted</div>';
+        echo '<div class="alert alert-info">Успешно удалено</div>';
     }
     ?>
     
     <!-- Filters -->
     <div class="well text-center filter-form">
         <form class="form form-inline" action="">
-            <label for="input_search">Search</label>
+            <label for="input_search">Поиск</label>
             <input type="text" class="form-control" id="input_search" name="search_string" value="<?php echo htmlspecialchars($search_string ?:'', ENT_QUOTES, 'UTF-8'); ?>">
-            <label for="input_order">Order By</label>
+            <label for="input_order">Сортировать по</label>
             <select name="filter_col" class="form-control">
                 <?php
                 foreach ($users->setOrderingValues() as $opt_value => $opt_name):

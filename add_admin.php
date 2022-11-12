@@ -6,7 +6,7 @@ require_once 'includes/auth_validate.php';
 //Only super admin is allowed to access this page
 if ($_SESSION['admin_type'] !== 'super') {
     // show permission denied message
-    echo 'Permission Denied';
+    echo 'В доступе отказано';
     exit();
 }
 
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     if($last_id)
     {
 
-    	$_SESSION['success'] = "Admin user added successfully!";
+    	$_SESSION['success'] = "Пользователь с правами администратора успешно добавлен!";
     	header('location: admin_users.php');
     	exit();
     }  
@@ -48,7 +48,7 @@ require_once 'includes/header.php';
 <div id="page-wrapper">
 	<div class="row">
 		<div class="col-lg-12">
-			<h2 class="page-header">Add User</h2>
+			<h2 class="page-header">Добавить пользователя</h2>
 		</div>
 	</div>
 	 <?php 

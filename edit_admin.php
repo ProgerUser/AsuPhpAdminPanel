@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	// If non-super user accesses this script via url. Stop the exexution
 	if ($_SESSION['admin_type'] !== 'super') {
 		// show permission denied message
-		echo 'Permission Denied';
+		echo 'Доступ запрещен';
 		exit();
 	}
 
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 	if (!empty($row['user_name'])) {
 
-		$_SESSION['failure'] = "User name already exists";
+		$_SESSION['failure'] = "Такой пользователь существует";
 
 		$query_string = http_build_query(array(
 			'admin_user_id' => $admin_user_id,
@@ -48,9 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$stat = $db->update('admin_accounts', $data_to_update);
 
 	if ($stat) {
-		$_SESSION['success'] = "Admin user has been updated successfully";
+		$_SESSION['success'] = "Пользователь с правами адм. успешно обновлен";
 	} else {
-		$_SESSION['failure'] = "Failed to update Admin user : " . $db->getLastError();
+		$_SESSION['failure'] = "Ошибка обн. данных пользователя адм. : " . $db->getLastError();
 	}
 
 	header('location: admin_users.php');
@@ -73,7 +73,7 @@ require_once 'includes/header.php';
 
     <div class="row">
      <div class="col-lg-12">
-            <h2 class="page-header">Update User</h2>
+            <h2 class="page-header">Обновить данные пользователя</h2>
         </div>
 
     </div>
