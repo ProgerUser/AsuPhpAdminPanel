@@ -7,7 +7,7 @@ require_once 'includes/auth_validate.php';
 $db = getDbInstance();
 
 //Get Dashboard information
-$numWordList = $db->getValue ("customers", "count(*)");
+$numWordList = $db->getValue("customers", "count(*)");
 
 include_once('includes/header.php');
 ?>
@@ -65,10 +65,10 @@ include_once('includes/header.php');
             </div>
         </div>
         <div class="col-lg-3 col-md-6">
-        
+
         </div>
         <div class="col-lg-3 col-md-6">
-            
+
         </div>
     </div>
     <!-- /.row -->

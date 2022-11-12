@@ -24,6 +24,7 @@ define('DB_NAME', "corephpadmin");
 /**
  * Get instance of DB object
  */
-function getDbInstance() {
-	return new MysqliDb(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+function getDbInstance()
+{
+    return new MysqliDb(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 }

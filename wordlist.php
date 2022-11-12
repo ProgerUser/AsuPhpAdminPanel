@@ -31,7 +31,7 @@ if (!$order_by) {
 
 //Get DB instance. i.e instance of MYSQLiDB Library
 $db = getDbInstance();
-$select = array('id', 'word', 'translate', 'dict_ref');
+$select = array('id', 'word', 'translate', 'dict_ref', 'created_at', 'updated_at');
 
 //Start building query according to input parameters.
 // If search string
@@ -107,7 +107,8 @@ include BASE_PATH . '/includes/header.php';
 
     <div id="export-section">
         <a href="export_wordlist.php">
-            <button class="btn btn-sm btn-primary">Экспортировать в CSV <i class="glyphicon glyphicon-export"></i></button>
+            <button class="btn btn-sm btn-primary">Экспортировать в CSV <i class="glyphicon glyphicon-export"></i>
+            </button>
         </a>
     </div>
 

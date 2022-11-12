@@ -23,9 +23,9 @@ class WordList
     {
         $ordering = [
             'id' => 'ID',
-            'word' => 'Word',
-            'translate' => 'Translate',
-            'dict_ref' => 'Dict ref',
+            'name' => 'Name',
+            'dict_author' => 'Dict author',
+            'year_pub' => 'Year publicated',
             'created_at' => 'Created at',
             'updated_at' => 'Updated at'
         ];

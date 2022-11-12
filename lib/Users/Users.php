@@ -1,4 +1,5 @@
 <?php
+
 class Users
 {
     /**
@@ -14,7 +15,7 @@ class Users
     public function __destruct()
     {
     }
-    
+
     /**
      * Set friendly columns\' names to order tables\' entries
      */
@@ -29,4 +30,5 @@ class Users
         return $ordering;
     }
 }
+
 ?>

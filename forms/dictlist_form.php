@@ -1,23 +1,33 @@
 <fieldset>
+
     <div class="form-group">
-        <label for="word">Слово *</label>
-        <input type="text" name="word"
-               value="<?php echo htmlspecialchars(($edit ? $wordlist['word'] : '') ?: '', ENT_QUOTES, 'UTF-8'); ?>"
-               placeholder="Слово" class="form-control" required="required" id="word">
+        <label for="id">ИД *</label>
+        <input type="text" name="id"
+               value="<?php echo htmlspecialchars(($edit ? $dictlist['id'] : '') ?: '', ENT_QUOTES, 'UTF-8'); ?>"
+               placeholder="Название" class="form-control" required="required" id="id">
     </div>
 
     <div class="form-group">
-        <label for="translate">Перевод *</label>
-        <input type="text" name="translate"
-               value="<?php echo htmlspecialchars(($edit ? $wordlist['translate'] : '') ?: '', ENT_QUOTES, 'UTF-8'); ?>"
-               placeholder="Перевод" class="form-control" required="required" id="translate">
+        <label for="name">Название *</label>
+        <input type="text" name="name"
+               value="<?php echo htmlspecialchars(($edit ? $dictlist['name'] : '') ?: '', ENT_QUOTES, 'UTF-8'); ?>"
+               placeholder="Название" class="form-control" required="required" id="name">
     </div>
 
     <div class="form-group">
-        <label for="dict_ref">Ссылка на словарь</label>
-        <textarea name="dict_ref" placeholder="Ссылка на словарь" class="form-control"
-                  id="dict_ref"><?php echo htmlspecialchars((($edit) ? $wordlist['dict_ref'] : '') ?: '', ENT_QUOTES, 'UTF-8'); ?></textarea>
+        <label for="dict_author">Автор *</label>
+        <input type="text" name="dict_author"
+               value="<?php echo htmlspecialchars(($edit ? $dictlist['dict_author'] : '') ?: '', ENT_QUOTES, 'UTF-8'); ?>"
+               placeholder="Автор" class="form-control" required="required" id="dict_author">
     </div>
+
+    <div class="form-group">
+        <label for="year_pub">Дата публикации *</label>
+        <input type="date" name="year_pub"
+               value="<?php echo htmlspecialchars(($edit ? $dictlist['year_pub'] : '') ?: '', ENT_QUOTES, 'UTF-8'); ?>"
+               placeholder="Дата публикации" class="form-control" required="required" id="year_pub">
+    </div>
+
 
     <div class="form-group text-center">
         <label></label>

@@ -4,8 +4,8 @@ require_once 'config/config.php';
 require_once BASE_PATH . '/includes/auth_validate.php';
 
 // WordList class
-require_once BASE_PATH . '/lib/WordList/WordList.php';
-$wordlist = new WordList();
+require_once BASE_PATH . '/lib/DictList/DictList.php';
+$dictlist = new WordList();
 
 // Get Input data from query string
 $search_string = filter_input(INPUT_GET, 'search_string');
@@ -31,13 +31,13 @@ if (!$order_by) {
 
 //Get DB instance. i.e instance of MYSQLiDB Library
 $db = getDbInstance();
-$select = array('id', 'word', 'translate', 'dict_ref');
+$select = array('id', 'name', 'dict_author', 'year_pub', 'created_at', 'updated_at');
 
 //Start building query according to input parameters.
 // If search string
 if ($search_string) {
-    $db->where('word', '%' . $search_string . '%', 'like');
-    $db->orwhere('translate', '%' . $search_string . '%', 'like');
+    $db->where('name', '%' . $search_string . '%', 'like');
+    $db->orwhere('dict_author', '%' . $search_string . '%', 'like');
 }
 
 //If order by option selected
@@ -49,7 +49,7 @@ if ($order_by) {
 $db->pageLimit = $pagelimit;
 
 // Get result of the query.
-$rows = $db->arraybuilder()->paginate('word_list', $page, $select);
+$rows = $db->arraybuilder()->paginate('dict_list', $page, $select);
 $total_pages = $db->totalPages;
 
 include BASE_PATH . '/includes/header.php';
@@ -78,7 +78,7 @@ include BASE_PATH . '/includes/header.php';
             <label for="input_order">Сортировка</label>
             <select name="filter_col" class="form-control">
                 <?php
-                foreach ($wordlist->setOrderingValues() as $opt_value => $opt_name):
+                foreach ($dictlist->setOrderingValues() as $opt_value => $opt_name):
                     ($order_by === $opt_value) ? $selected = 'selected' : $selected = '';
                     echo ' <option value="' . $opt_value . '" ' . $selected . '>' . $opt_name . '</option>';
                 endforeach;
@@ -106,8 +106,9 @@ include BASE_PATH . '/includes/header.php';
 
 
     <div id="export-section">
-        <a href="export_wordlist.php">
-            <button class="btn btn-sm btn-primary">Экспортировать в CSV <i class="glyphicon glyphicon-export"></i></button>
+        <a href="export_dictlist.php">
+            <button class="btn btn-sm btn-primary">Экспортировать в CSV <i class="glyphicon glyphicon-export"></i>
+            </button>
         </a>
     </div>
 
@@ -116,9 +117,9 @@ include BASE_PATH . '/includes/header.php';
         <thead>
         <tr>
             <th width="5%">ID</th>
-            <th width="45%">Слово</th>
-            <th width="20%">Перевод</th>
-            <th width="20%">Ссылка на словарь</th>
+            <th width="45%">Название</th>
+            <th width="20%">Автор</th>
+            <th width="20%">Дата публикации</th>
             <th width="10%">Действия</th>
         </tr>
         </thead>
@@ -126,11 +127,11 @@ include BASE_PATH . '/includes/header.php';
         <?php foreach ($rows as $row): ?>
             <tr>
                 <td><?php echo $row['id']; ?></td>
-                <td><?php echo xss_clean($row['word']); ?></td>
-                <td><?php echo xss_clean($row['translate']); ?></td>
-                <td><?php echo xss_clean($row['dict_ref']); ?></td>
+                <td><?php echo xss_clean($row['name']); ?></td>
+                <td><?php echo xss_clean($row['dict_author']); ?></td>
+                <td><?php echo xss_clean($row['year_pub']); ?></td>
                 <td>
-                    <a href="edit_wordlist.php?customer_id=<?php echo $row['id']; ?>&operation=edit"
+                    <a href="edit_dictlist.php?customer_id=<?php echo $row['id']; ?>&operation=edit"
                        class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
                     <a href="#" class="btn btn-danger delete_btn" data-toggle="modal"
                        data-target="#confirm-delete-<?php echo $row['id']; ?>"><i class="glyphicon glyphicon-trash"></i></a>
@@ -166,7 +167,7 @@ include BASE_PATH . '/includes/header.php';
 
     <!-- Pagination -->
     <div class="text-center">
-        <?php echo paginationLinks($page, $total_pages, 'wordlist.php'); ?>
+        <?php echo paginationLinks($page, $total_pages, 'dictlist.php'); ?>
     </div>
     <!-- //Pagination -->
 </div>
