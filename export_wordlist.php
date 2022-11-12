@@ -5,19 +5,19 @@ require_once 'config/config.php';
 require_once BASE_PATH . '/includes/auth_validate.php';
 
 $db = getDbInstance();
-$select = array('id', 'f_name', 'l_name', 'gender', 'phone', 'created_at', 'updated_at');
+$select = array('id', 'word', 'translate', 'dict_ref');
 
 
 $chunk_size = 100;
 $offset = 0;
 
-$data = $db->withTotalCount()->get('customers');
+$data = $db->withTotalCount()->get('word_list');
 $total_count = $db->totalCount;
 
 $handle = fopen('php://memory', 'w');
 
 fputcsv($handle,$select);
-$filename = 'export_customers.csv';
+$filename = 'export_wordlist.csv';
 
 
 $num_queries = ($total_count/$chunk_size) + 1;
@@ -25,7 +25,7 @@ $num_queries = ($total_count/$chunk_size) + 1;
 //Prevent memory leak for large number of rows by using limit and offset :
 for ($i=0; $i<$num_queries; $i++){
 
-    $rows = $db->get('customers',Array($offset,$chunk_size), $select);
+    $rows = $db->get('word_list',Array($offset,$chunk_size), $select);
     $offset = $offset + $chunk_size;
     foreach ($rows as $row) {
 

@@ -3,9 +3,9 @@ session_start();
 require_once 'config/config.php';
 require_once BASE_PATH . '/includes/auth_validate.php';
 
-// Costumers class
-require_once BASE_PATH . '/lib/Costumers/Costumers.php';
-$costumers = new Costumers();
+// WordList class
+require_once BASE_PATH . '/lib/WordList/WordList.php';
+$wordlist = new WordList();
 
 // Get Input data from query string
 $search_string = filter_input(INPUT_GET, 'search_string');
@@ -26,18 +26,18 @@ if (!$filter_col) {
     $filter_col = 'id';
 }
 if (!$order_by) {
-    $order_by = 'Desc';
+    $order_by = 'Asc';
 }
 
 //Get DB instance. i.e instance of MYSQLiDB Library
 $db = getDbInstance();
-$select = array('id', 'f_name', 'l_name', 'gender', 'phone', 'created_at', 'updated_at');
+$select = array('id', 'word', 'translate', 'dict_ref');
 
 //Start building query according to input parameters.
 // If search string
 if ($search_string) {
-    $db->where('f_name', '%' . $search_string . '%', 'like');
-    $db->orwhere('l_name', '%' . $search_string . '%', 'like');
+    $db->where('word', '%' . $search_string . '%', 'like');
+    $db->orwhere('translate', '%' . $search_string . '%', 'like');
 }
 
 //If order by option selected
@@ -49,7 +49,7 @@ if ($order_by) {
 $db->pageLimit = $pagelimit;
 
 // Get result of the query.
-$rows = $db->arraybuilder()->paginate('customers', $page, $select);
+$rows = $db->arraybuilder()->paginate('word_list', $page, $select);
 $total_pages = $db->totalPages;
 
 include BASE_PATH . '/includes/header.php';
@@ -62,7 +62,7 @@ include BASE_PATH . '/includes/header.php';
         </div>
         <div class="col-lg-6">
             <div class="page-action-links text-right">
-                <a href="add_customer.php?operation=create" class="btn btn-success"><i
+                <a href="add_wordlist.php?operation=create" class="btn btn-success"><i
                             class="glyphicon glyphicon-plus"></i> Добавить</a>
             </div>
         </div>
@@ -78,7 +78,7 @@ include BASE_PATH . '/includes/header.php';
             <label for="input_order">Сортировка</label>
             <select name="filter_col" class="form-control">
                 <?php
-                foreach ($costumers->setOrderingValues() as $opt_value => $opt_name):
+                foreach ($wordlist->setOrderingValues() as $opt_value => $opt_name):
                     ($order_by === $opt_value) ? $selected = 'selected' : $selected = '';
                     echo ' <option value="' . $opt_value . '" ' . $selected . '>' . $opt_name . '</option>';
                 endforeach;
@@ -106,7 +106,7 @@ include BASE_PATH . '/includes/header.php';
 
 
     <div id="export-section">
-        <a href="export_customers.php">
+        <a href="export_wordlist.php">
             <button class="btn btn-sm btn-primary">Экспортировать в CSV <i class="glyphicon glyphicon-export"></i></button>
         </a>
     </div>
@@ -116,21 +116,21 @@ include BASE_PATH . '/includes/header.php';
         <thead>
         <tr>
             <th width="5%">ID</th>
-            <th width="45%">Name</th>
-            <th width="20%">Gender</th>
-            <th width="20%">Phone</th>
-            <th width="10%">Actions</th>
+            <th width="45%">Слово</th>
+            <th width="20%">Перевод</th>
+            <th width="20%">Ссылка на словарь</th>
+            <th width="10%">Действия</th>
         </tr>
         </thead>
         <tbody>
         <?php foreach ($rows as $row): ?>
             <tr>
                 <td><?php echo $row['id']; ?></td>
-                <td><?php echo xss_clean($row['f_name'] . ' ' . $row['l_name']); ?></td>
-                <td><?php echo xss_clean($row['gender']); ?></td>
-                <td><?php echo xss_clean($row['phone']); ?></td>
+                <td><?php echo xss_clean($row['word']); ?></td>
+                <td><?php echo xss_clean($row['translate']); ?></td>
+                <td><?php echo xss_clean($row['dict_ref']); ?></td>
                 <td>
-                    <a href="edit_customer.php?customer_id=<?php echo $row['id']; ?>&operation=edit"
+                    <a href="edit_wordlist.php?customer_id=<?php echo $row['id']; ?>&operation=edit"
                        class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
                     <a href="#" class="btn btn-danger delete_btn" data-toggle="modal"
                        data-target="#confirm-delete-<?php echo $row['id']; ?>"><i class="glyphicon glyphicon-trash"></i></a>
@@ -139,7 +139,7 @@ include BASE_PATH . '/includes/header.php';
             <!-- Delete Confirmation Modal -->
             <div class="modal fade" id="confirm-delete-<?php echo $row['id']; ?>" role="dialog">
                 <div class="modal-dialog">
-                    <form action="delete_customer.php" method="POST">
+                    <form action="delete_wordlist.php" method="POST">
                         <!-- Modal content -->
                         <div class="modal-content">
                             <div class="modal-header">
@@ -166,7 +166,7 @@ include BASE_PATH . '/includes/header.php';
 
     <!-- Pagination -->
     <div class="text-center">
-        <?php echo paginationLinks($page, $total_pages, 'customers.php'); ?>
+        <?php echo paginationLinks($page, $total_pages, 'wordlist.php'); ?>
     </div>
     <!-- //Pagination -->
 </div>

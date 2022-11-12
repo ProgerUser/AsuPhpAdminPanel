@@ -7,7 +7,7 @@ require_once 'includes/auth_validate.php';
 $db = getDbInstance();
 
 //Get Dashboard information
-$numCustomers = $db->getValue ("customers", "count(*)");
+$numWordList = $db->getValue ("customers", "count(*)");
 
 include_once('includes/header.php');
 ?>
@@ -28,12 +28,12 @@ include_once('includes/header.php');
                             <i class="fa fa-user fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge"><?php echo $numCustomers; ?></div>
-                            <div>Словари</div>
+                            <div class="huge"><?php echo $numWordList; ?></div>
+                            <div>Список слов</div>
                         </div>
                     </div>
                 </div>
-                <a href="customers.php">
+                <a href="wordlist.php">
                     <div class="panel-footer">
                         <span class="pull-left">Детально</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

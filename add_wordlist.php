@@ -4,7 +4,7 @@ require_once './config/config.php';
 require_once './includes/auth_validate.php';
 
 
-//serve POST method, After successful insert, redirect to customers.php page.
+//serve POST method, After successful insert, redirect to wordlist.php page.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') 
 {
     //Mass Insert Data. Keep "name" attribute in html form same as column name in mysql table.
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     if($last_id)
     {
     	$_SESSION['success'] = "Customer added successfully!";
-    	header('location: customers.php');
+    	header('location: wordlist.php');
     	exit();
     }
     else
@@ -42,7 +42,7 @@ require_once 'includes/header.php';
         
 </div>
     <form class="form" action="" method="post"  id="customer_form" enctype="multipart/form-data">
-       <?php  include_once('./forms/customer_form.php'); ?>
+       <?php  include_once('./forms/wordlist_form.php'); ?>
     </form>
 </div>
 

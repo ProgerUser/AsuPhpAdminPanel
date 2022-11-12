@@ -8,26 +8,26 @@ if ($del_id && $_SERVER['REQUEST_METHOD'] == 'POST')
 
 	if($_SESSION['admin_type']!='super'){
 		$_SESSION['failure'] = "У вас нет разрешения на выполнение этого действия";
-    	header('location: customers.php');
+    	header('location: wordlist.php');
         exit;
 
 	}
-    $customer_id = $del_id;
+    $word_id = $del_id;
 
     $db = getDbInstance();
-    $db->where('id', $customer_id);
-    $status = $db->delete('customers');
+    $db->where('id', $word_id);
+    $status = $db->delete('word_list');
     
     if ($status) 
     {
-        $_SESSION['info'] = "Словарь успешно удален!";
-        header('location: customers.php');
+        $_SESSION['info'] = "Строка успешно удалена!";
+        header('location: wordlist.php');
         exit;
     }
     else
     {
     	$_SESSION['failure'] = "Не удалось удалить словарь";
-    	header('location: customers.php');
+    	header('location: wordlist.php');
         exit;
 
     }
