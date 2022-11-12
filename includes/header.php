@@ -80,14 +80,25 @@
                                     <a href="index.php"><i class="fa fa-dashboard fa-fw"></i> Главная</a>
                                 </li>
 
+                                <li <?php echo (CURRENT_PAGE == "dictlist.php" || CURRENT_PAGE == "add_dictlist.php") ? 'class="active"' : ''; ?>>
+                                    <a href="#"><i class="fa fa-book fa-fw"></i> Список словарей<span class="fa arrow"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li>
+                                            <a href="dictlist.php"><i class="fa fa-list fa-fw"></i>Весь список</a>
+                                        </li>
+                                        <li>
+                                            <a href="add_dictlist.php"><i class="fa fa-plus fa-fw"></i>Добавить строку</a>
+                                        </li>
+                                    </ul>
+                                </li>
                                 <li <?php echo (CURRENT_PAGE == "wordlist.php" || CURRENT_PAGE == "add_wordlist.php") ? 'class="active"' : ''; ?>>
-                                    <a href="#"><i class="fa fa-user-circle fa-fw"></i> Список слов<span class="fa arrow"></span></a>
+                                    <a href="#"><i class="fa fa-file-word-o fa-fw"></i> Список слов<span class="fa arrow"></span></a>
                                     <ul class="nav nav-second-level">
                                         <li>
                                             <a href="wordlist.php"><i class="fa fa-list fa-fw"></i>Весь список</a>
                                         </li>
                                     <li>
-                                        <a href="add_customer.php"><i class="fa fa-plus fa-fw"></i>Добавить строку</a>
+                                        <a href="add_wordlist.php"><i class="fa fa-plus fa-fw"></i>Добавить строку</a>
                                     </li>
                                     </ul>
                                 </li>
