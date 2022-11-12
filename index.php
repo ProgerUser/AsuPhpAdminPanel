@@ -7,7 +7,8 @@ require_once 'includes/auth_validate.php';
 $db = getDbInstance();
 
 //Get Dashboard information
-$numWordList = $db->getValue("customers", "count(*)");
+$numWordList = $db->getValue("word_list", "count(*)");
+$numDictList = $db->getValue("dict_list", "count(*)");
 
 include_once('includes/header.php');
 ?>
@@ -29,13 +30,13 @@ include_once('includes/header.php');
                         </div>
                         <div class="col-xs-9 text-right">
                             <div class="huge"><?php echo $numWordList; ?></div>
-                            <div>Список слов</div>
+                            <div>Кол-во слов</div>
                         </div>
                     </div>
                 </div>
                 <a href="wordlist.php">
                     <div class="panel-footer">
-                        <span class="pull-left">Детально</span>
+                        <span class="pull-left">Подробнее</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>
@@ -50,14 +51,14 @@ include_once('includes/header.php');
                             <i class="fa fa-tasks fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge">12</div>
-                            <div>New Tasks!</div>
+                            <div class="huge"><?php echo $numDictList; ?></div>
+                            <div>Кол-во словарей</div>
                         </div>
                     </div>
                 </div>
-                <a href="#">
+                <a href="dictlist.php">
                     <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
+                        <span class="pull-left">Подробнее</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>
