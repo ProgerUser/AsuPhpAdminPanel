@@ -5,7 +5,7 @@ require_once 'includes/auth_validate.php';
 
 //User ID for which we are performing operation
 $admin_user_id = filter_input(INPUT_GET, 'admin_user_id');
-$operation = filter_input(INPUT_GET, 'operation', FILTER_SANITIZE_STRING);
+$operation = filter_input(INPUT_GET, 'operation', FILTER_UNSAFE_RAW);
 ($operation == 'edit') ? $edit = true : $edit = false;
 //Serve POST request.
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

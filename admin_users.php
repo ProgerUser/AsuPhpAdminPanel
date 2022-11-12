@@ -92,7 +92,7 @@ include BASE_PATH.'/includes/header.php';
     <div class="well text-center filter-form">
         <form class="form form-inline" action="">
             <label for="input_search">Search</label>
-            <input type="text" class="form-control" id="input_search" name="search_string" value="<?php echo htmlspecialchars($search_string, ENT_QUOTES, 'UTF-8'); ?>">
+            <input type="text" class="form-control" id="input_search" name="search_string" value="<?php echo htmlspecialchars($search_string ?:'', ENT_QUOTES, 'UTF-8'); ?>">
             <label for="input_order">Order By</label>
             <select name="filter_col" class="form-control">
                 <?php
@@ -134,8 +134,8 @@ include BASE_PATH.'/includes/header.php';
             <?php foreach ($rows as $row): ?>
             <tr>
                 <td><?php echo $row['id']; ?></td>
-                <td><?php echo htmlspecialchars($row['user_name']); ?></td>
-                <td><?php echo htmlspecialchars($row['admin_type']); ?></td>
+                <td><?php echo htmlspecialchars($row['user_name']?:''); ?></td>
+                <td><?php echo htmlspecialchars($row['admin_type']?:''); ?></td>
                 <td>
                     <a href="edit_admin.php?admin_user_id=<?php echo $row['id']; ?>&operation=edit" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
                     <a href="#" class="btn btn-danger delete_btn" data-toggle="modal" data-target="#confirm-delete-<?php echo $row['id']; ?>"><i class="glyphicon glyphicon-trash"></i></a>

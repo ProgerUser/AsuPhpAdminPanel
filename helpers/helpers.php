@@ -47,7 +47,7 @@ function clearAuthCookie() {
 function clean_input($data) {
 	$data = trim($data);
 	$data = stripslashes($data);
-	$data = htmlspecialchars($data);
+	$data = htmlspecialchars($data?:'');
 	return $data;
 }
 
@@ -118,6 +118,6 @@ function paginationLinks($current_page, $total_pages, $base_url) {
  * to prevent xss
  */
 function xss_clean($string){
-    return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+    return htmlspecialchars($string?:'', ENT_QUOTES, 'UTF-8');
 
 }

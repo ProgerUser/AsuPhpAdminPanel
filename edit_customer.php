@@ -6,7 +6,7 @@ require_once 'includes/auth_validate.php';
 
 // Sanitize if you want
 $customer_id = filter_input(INPUT_GET, 'customer_id', FILTER_VALIDATE_INT);
-$operation = filter_input(INPUT_GET, 'operation',FILTER_SANITIZE_STRING); 
+$operation = filter_input(INPUT_GET, 'operation',FILTER_UNSAFE_RAW/*FILTER_SANITIZE_STRING*/);
 ($operation == 'edit') ? $edit = true : $edit = false;
  $db = getDbInstance();
 
@@ -14,7 +14,7 @@ $operation = filter_input(INPUT_GET, 'operation',FILTER_SANITIZE_STRING);
 if ($_SERVER['REQUEST_METHOD'] == 'POST') 
 {
     //Get customer id form query string parameter.
-    $customer_id = filter_input(INPUT_GET, 'customer_id', FILTER_SANITIZE_STRING);
+    $customer_id = filter_input(INPUT_GET, 'customer_id', FILTER_UNSAFE_RAW);
 
     //Get input data
     $data_to_update = filter_input_array(INPUT_POST);
