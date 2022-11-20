@@ -5,7 +5,7 @@ require_once BASE_PATH . '/includes/auth_validate.php';
 
 // WordList class
 require_once BASE_PATH . '/lib/DictList/DictList.php';
-$dictlist = new WordList();
+$dictlist = new DictList();
 
 // Get Input data from query string
 $search_string = filter_input(INPUT_GET, 'search_string');
@@ -62,7 +62,7 @@ include BASE_PATH . '/includes/header.php';
         </div>
         <div class="col-lg-6">
             <div class="page-action-links text-right">
-                <a href="add_wordlist.php?operation=create" class="btn btn-success"><i
+                <a href="add_dictlist.php?operation=create" class="btn btn-success"><i
                             class="glyphicon glyphicon-plus"></i> Добавить</a>
             </div>
         </div>

@@ -1,6 +1,6 @@
 <?php
 
-class WordList
+class DictList
 {
     /**
      *

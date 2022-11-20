@@ -13,7 +13,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data_to_store['created_at'] = date('Y-m-d H:i:s');
     $db = getDbInstance();
 
+//проверка собержимого
+/*    foreach ($data_to_store as $value) {
+        echo "$value <br>";
+    }*/
+
     $last_id = $db->insert('dict_list', $data_to_store);
+
 
     if ($last_id) {
         $_SESSION['success'] = "Словарь добавлен успешно!";
