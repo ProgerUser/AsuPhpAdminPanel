@@ -140,7 +140,7 @@ include BASE_PATH . '/includes/header.php';
             <!-- Delete Confirmation Modal -->
             <div class="modal fade" id="confirm-delete-<?php echo $row['id']; ?>" role="dialog">
                 <div class="modal-dialog">
-                    <form action="delete_wordlist.php" method="POST">
+                    <form action="delete_dictlist.php" method="POST">
                         <!-- Modal content -->
                         <div class="modal-content">
                             <div class="modal-header">
