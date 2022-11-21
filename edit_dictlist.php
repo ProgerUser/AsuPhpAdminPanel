@@ -29,6 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header('location: dictlist.php');
         //Important! Don't execute the rest put the exit/die. 
         exit();
+    }else{
+        echo 'Статус: ' .$db->getLastError();
     }
 }
 
