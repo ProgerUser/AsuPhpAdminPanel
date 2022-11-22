@@ -29,7 +29,9 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script src="assets/js/jquery.min.js" type="text/javascript"></script>
+    <script src="tinymce/tinymce.min.js" referrerpolicy="origin"></script>
 
+    <script>tinymce.init({selector:'textarea',language: 'ru'});</script>
 </head>
 
 <body>

@@ -8,15 +8,15 @@
 
     <div class="form-group">
         <label for="translate">Перевод *</label>
-        <input type="text" name="translate"
-               value="<?php echo htmlspecialchars(($edit ? $wordlist['translate'] : '') ?: '', ENT_QUOTES, 'UTF-8'); ?>"
-               placeholder="Перевод" class="form-control" required="required" id="translate">
+        <textarea name="translate" placeholder="Ссылка на словарь" class="form-control"
+                  id="translate"><?php echo htmlspecialchars((($edit) ? $wordlist['translate'] : '') ?: '', ENT_QUOTES, 'UTF-8'); ?></textarea>
     </div>
 
     <div class="form-group">
-        <label for="dict_ref">Ссылка на словарь</label>
-        <textarea name="dict_ref" placeholder="Ссылка на словарь" class="form-control"
-                  id="dict_ref"><?php echo htmlspecialchars((($edit) ? $wordlist['dict_ref'] : '') ?: '', ENT_QUOTES, 'UTF-8'); ?></textarea>
+        <label for="dict_ref">Ссылка на словарь *</label>
+        <input type="text" name="dict_ref"
+               value="<?php echo htmlspecialchars(($edit ? $wordlist['dict_ref'] : '') ?: '', ENT_QUOTES, 'UTF-8'); ?>"
+               placeholder="Ссылка на словарь" class="form-control" required="required" id="dict_ref">
     </div>
 
     <div class="form-group text-center">
