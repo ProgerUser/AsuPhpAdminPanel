@@ -31,7 +31,7 @@ if (!$order_by) {
 
 //Get DB instance. i.e instance of MYSQLiDB Library
 $db = getDbInstance();
-$select = array('id', 'word', 'translate', 'dict_ref', 'created_at', 'updated_at');
+$select = array('id', 'word', 'translate', 'dict_ref', 'dict_name', 'created_at', 'updated_at');
 
 //Start building query according to input parameters.
 // If search string
@@ -49,7 +49,7 @@ if ($order_by) {
 $db->pageLimit = $pagelimit;
 
 // Get result of the query.
-$rows = $db->arraybuilder()->paginate('word_list', $page, $select);
+$rows = $db->arraybuilder()->paginate('v_word_list', $page, $select);
 $total_pages = $db->totalPages;
 
 include BASE_PATH . '/includes/header.php';
@@ -117,9 +117,10 @@ include BASE_PATH . '/includes/header.php';
         <thead>
         <tr>
             <th width="5%">ID</th>
-            <th width="45%">Слово</th>
-            <th width="20%">Перевод</th>
-            <th width="20%">Ссылка на словарь</th>
+            <th width="25%">Слово</th>
+            <th width="35%">Перевод</th>
+            <th width="5%">Словарь ID</th>
+            <th width="20%">Словарь Наименование</th>
             <th width="10%">Действия</th>
         </tr>
         </thead>
@@ -130,6 +131,7 @@ include BASE_PATH . '/includes/header.php';
                 <td><?php echo xss_clean($row['word']); ?></td>
                 <td><?php echo xss_clean($row['translate']); ?></td>
                 <td><?php echo xss_clean($row['dict_ref']); ?></td>
+                <td><?php echo xss_clean($row['dict_name']); ?></td>
                 <td>
                     <a href="edit_wordlist.php?customer_id=<?php echo $row['id']; ?>&operation=edit"
                        class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>

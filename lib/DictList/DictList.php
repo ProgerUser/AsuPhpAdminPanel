@@ -22,12 +22,13 @@ class DictList
     public function setOrderingValues()
     {
         $ordering = [
-            'id' => 'ID',
-            'name' => 'Name',
-            'dict_author' => 'Dict author',
-            'year_pub' => 'Year publicated',
-            'created_at' => 'Created at',
-            'updated_at' => 'Updated at'
+            'id' => 'ИД',
+            'name' => 'Наименование',
+            'dict_author' => 'Автор',
+            'year_pub' => 'Дата публикации',
+            'created_at' => 'Дата создания',
+            'updated_at' => 'Дата обновления',
+            'wordcnt' => 'Кол-во слов'
         ];
 
         return $ordering;

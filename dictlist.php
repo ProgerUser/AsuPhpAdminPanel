@@ -31,7 +31,7 @@ if (!$order_by) {
 
 //Get DB instance. i.e instance of MYSQLiDB Library
 $db = getDbInstance();
-$select = array('id', 'name', 'dict_author', 'year_pub', 'created_at', 'updated_at');
+$select = array('id', 'name', 'dict_author', 'year_pub', 'created_at', 'updated_at','wordcnt');
 
 //Start building query according to input parameters.
 // If search string
@@ -49,7 +49,7 @@ if ($order_by) {
 $db->pageLimit = $pagelimit;
 
 // Get result of the query.
-$rows = $db->arraybuilder()->paginate('dict_list', $page, $select);
+$rows = $db->arraybuilder()->paginate('v_dict_list', $page, $select);
 $total_pages = $db->totalPages;
 
 include BASE_PATH . '/includes/header.php';
@@ -117,9 +117,10 @@ include BASE_PATH . '/includes/header.php';
         <thead>
         <tr>
             <th width="5%">ID</th>
-            <th width="45%">Название</th>
+            <th width="35%">Название</th>
             <th width="20%">Автор</th>
-            <th width="20%">Дата публикации</th>
+            <th width="10%">Дата публикации</th>
+            <th width="10%">Кол-во слов</th>
             <th width="10%">Действия</th>
         </tr>
         </thead>
@@ -130,6 +131,7 @@ include BASE_PATH . '/includes/header.php';
                 <td><?php echo xss_clean($row['name']); ?></td>
                 <td><?php echo xss_clean($row['dict_author']); ?></td>
                 <td><?php echo xss_clean($row['year_pub']); ?></td>
+                <td><?php echo xss_clean($row['wordcnt']); ?></td>
                 <td>
                     <a href="edit_dictlist.php?customer_id=<?php echo $row['id']; ?>&operation=edit"
                        class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>

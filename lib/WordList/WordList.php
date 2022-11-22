@@ -22,12 +22,12 @@ class WordList
     public function setOrderingValues()
     {
         $ordering = [
-            'id' => 'ID',
-            'word' => 'Word',
-            'translate' => 'Translate',
-            'dict_ref' => 'Dict ref',
-            'created_at' => 'Created at',
-            'updated_at' => 'Updated at'
+            'id' => 'Ид',
+            'word' => 'Слово',
+            'translate' => 'Перевод',
+            'dict_ref' => 'Ссылка на словарь',
+            'created_at' => 'Время создания',
+            'updated_at' => 'Время обновления'
         ];
 
         return $ordering;
