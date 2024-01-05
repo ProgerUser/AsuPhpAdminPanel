@@ -1,7 +1,7 @@
-# Core PHP Admin panel
+# PHP Admin panel для Словарей
 
 
-A Simple Admin Pannel written in core PHP. It contains an implementation of general features you might need in your website admin panel like :
+# Доступная функциональность :
 
   - Record management (CRUD)
   - Bootstrap based HTML template.
@@ -9,13 +9,7 @@ A Simple Admin Pannel written in core PHP. It contains an implementation of gene
   - Pagination
   - Filters
 
-### Live Demo :
-http://freecs9.epizy.com/core-php-admin
-Credentials :  
-**username** : admin
-**password** : admin
 
-
-### Libraries used : 
+### Используемые библиотеки : 
   - MysqliDb (https://github.com/ThingEngineer/PHP-MySQLi-Database-Class)
   - PSV
