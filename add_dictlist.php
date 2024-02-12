@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data_to_store['created_at'] = date('Y-m-d H:i:s');
     $db = getDbInstance();
 
-//проверка собержимого
+//проверка содержимого
 /*    foreach ($data_to_store as $value) {
         echo "$value <br>";
     }*/

@@ -105,12 +105,30 @@ include BASE_PATH . '/includes/header.php';
     <!-- //Filters -->
 
 
-    <div id="export-section">
-        <a href="export_wordlist.php">
-            <button class="btn btn-sm btn-primary">Экспортировать в CSV <i class="glyphicon glyphicon-export"></i>
-            </button>
-        </a>
-    </div>
+    <table class="table table-striped table-condensed">
+        <thead>
+        <tr>
+            <td>
+                <div id="import-section">
+                    <a href="import_word.php">
+                        <button class="btn btn-sm btn-primary">Импорт в Excel <i class="glyphicon glyphicon-import"></i>
+                        </button>
+                    </a>
+                </div>
+            </td>
+            <td>
+                <div id="export-section">
+                    <a href="export_wordlist.php">
+                        <button class="btn btn-sm btn-primary">Экспортировать в CSV <i
+                                    class="glyphicon glyphicon-export"></i>
+                        </button>
+                    </a>
+                </div>
+            </td>
+        </tr>
+        </thead>
+    </table>
+
 
     <!-- Table -->
     <table class="table table-striped table-bordered table-condensed">

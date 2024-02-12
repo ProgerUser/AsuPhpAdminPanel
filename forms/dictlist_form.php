@@ -4,7 +4,7 @@
         <label for="id">ИД *</label>
         <input type="text" name="id"
                value="<?php echo htmlspecialchars(($edit ? $dictlist['id'] : '') ?: '', ENT_QUOTES, 'UTF-8'); ?>"
-               placeholder="Название" class="form-control" required="required" id="id">
+               placeholder="ИД" class="form-control" required="required" id="id">
     </div>
 
     <div class="form-group">

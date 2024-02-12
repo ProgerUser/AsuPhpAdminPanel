@@ -31,7 +31,7 @@ if (!$order_by) {
 
 //Get DB instance. i.e instance of MYSQLiDB Library
 $db = getDbInstance();
-$select = array('id', 'name', 'dict_author', 'year_pub', 'created_at', 'updated_at','wordcnt');
+$select = array('id', 'name', 'dict_author', 'year_pub', 'created_at', 'updated_at', 'wordcnt');
 
 //Start building query according to input parameters.
 // If search string
