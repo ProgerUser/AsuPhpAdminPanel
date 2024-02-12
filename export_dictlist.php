@@ -35,8 +35,10 @@ for ($i = 0; $i < $num_queries; $i++) {
 
 // reset the file pointer to the start of the file
 fseek($handle, 0);
+header('Content-Encoding: utf-8');
+header('Content-Type: text/csv; charset=utf-8');
 // tell the browser it's going to be a csv file
-header('Content-Type: application/csv');
+//header('Content-Type: application/csv');
 // Save instead of displaying csv string
 header('Content-Disposition: attachment; filename="' . $filename . '";');
 //Send the generated csv lines directly to browser

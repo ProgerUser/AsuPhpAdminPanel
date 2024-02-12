@@ -9,6 +9,7 @@ $wordlist = new WordList();
 
 // Get Input data from query string
 $search_string = filter_input(INPUT_GET, 'search_string');
+$srch_dict = filter_input(INPUT_GET, 'srch_dict');
 $filter_col = filter_input(INPUT_GET, 'filter_col');
 $order_by = filter_input(INPUT_GET, 'order_by');
 
@@ -39,6 +40,9 @@ if ($search_string) {
     $db->where('word', '%' . $search_string . '%', 'like');
     $db->orwhere('translate', '%' . $search_string . '%', 'like');
 }
+if ($srch_dict) {
+    $db->where('dict_ref', $srch_dict, '=');
+}
 
 //If order by option selected
 if ($order_by) {
@@ -51,6 +55,7 @@ $db->pageLimit = $pagelimit;
 // Get result of the query.
 $rows = $db->arraybuilder()->paginate('v_word_list', $page, $select);
 $total_pages = $db->totalPages;
+
 
 include BASE_PATH . '/includes/header.php';
 ?>
@@ -72,6 +77,9 @@ include BASE_PATH . '/includes/header.php';
     <!-- Filters -->
     <div class="well text-center filter-form">
         <form class="form form-inline" action="">
+            <label for="input_search">ID Dict</label>
+            <input type="text" class="form-control" id="input_search_dict" name="srch_dict"
+                   value="<?php echo xss_clean($srch_dict); ?>">
             <label for="input_search">Поиск</label>
             <input type="text" class="form-control" id="input_search" name="search_string"
                    value="<?php echo xss_clean($search_string); ?>">
