@@ -1,66 +1,80 @@
 <?php
-session_start();
 require_once 'config/config.php';
-$token = bin2hex(openssl_random_pseudo_bytes(16));
+require_once 'config/security.php';
+require_once 'includes/session_handler.php';
 
-// If User has already logged in, redirect to dashboard page.
-if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === TRUE) {
-    header('Location:index.php');
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
 }
 
-// If user has previously selected "remember me option": 
+// Если пользователь уже авторизован, перенаправляем на главную
+if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === TRUE) {
+    header('Location: index.php');
+    exit;
+}
+
+// Проверка remember me cookie
 if (isset($_COOKIE['series_id']) && isset($_COOKIE['remember_token'])) {
-    // Get user credentials from cookies.
-    $series_id = filter_var($_COOKIE['series_id']);
-    $remember_token = filter_var($_COOKIE['remember_token']);
-    $db = getDbInstance();
-    // Get user By series ID:
-    $db->where('series_id', $series_id);
-    $row = $db->getOne('admin_accounts');
+    $series_id = filter_var($_COOKIE['series_id'], FILTER_SANITIZE_STRING);
+    $remember_token = filter_var($_COOKIE['remember_token'], FILTER_SANITIZE_STRING);
+    
+    try {
+        $db = getDbInstance();
+        $db->where('series_id', $series_id);
+        $row = $db->getOne('admin_accounts');
 
-    if ($db->count >= 1) {
-        // User found. verify remember token
-        if (password_verify($remember_token, $row['remember_token'])) {
-            // Verify if expiry time is modified.
-            $expires = strtotime($row['expires']);
+        if ($row) {
+            if (password_verify($remember_token, $row['remember_token'])) {
+                $expires = strtotime($row['expires']);
 
-            if (strtotime(date('d-m-y h:i:s')) > $expires) {
-                // Remember Cookie has expired.
-                clearAuthCookie();
-                header('Location:login.php');
+                if (strtotime('now') > $expires) {
+                    clearAuthCookie();
+                    header('Location: login.php');
+                    exit;
+                }
+
+                regenerateSession();
+                $_SESSION['user_logged_in'] = TRUE;
+                $_SESSION['admin_type'] = $row['admin_type'];
+                $_SESSION['user_id'] = $row['id'];
+                $_SESSION['user_name'] = $row['user_name'];
+                header('Location: index.php');
                 exit;
             }
-
-            $_SESSION['user_logged_in'] = TRUE;
-            $_SESSION['admin_type'] = $row['admin_type'];
-            header('Location:index.php');
-            exit;
-        } else {
-            clearAuthCookie();
-            header('Location:login.php');
-            exit;
         }
-    } else {
+        
         clearAuthCookie();
-        header('Location:login.php');
-        exit;
+    } catch (Exception $e) {
+        clearAuthCookie();
     }
 }
 
+// Генерация CSRF токена для формы
+$csrf_token = generateCSRFToken();
+
 include BASE_PATH . '/includes/header.php';
 ?>
+
 <div id="page-" class="col-md-4 col-md-offset-4">
     <form class="form loginform" method="POST" action="authenticate.php">
+        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
+        
         <div class="login-panel panel panel-default">
-            <div class="panel-heading">Введите данные</div>
+            <div class="panel-heading">Вход в систему</div>
             <div class="panel-body">
                 <div class="form-group">
                     <label class="control-label">Логин</label>
-                    <input type="text" name="username" class="form-control" required="required">
+                    <input type="text" name="username" class="form-control" required="required" 
+                           pattern="[a-zA-Z0-9_-]{3,16}" 
+                           title="Логин должен содержать от 3 до 16 символов (буквы, цифры, - и _)"
+                           autocomplete="username">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Пароль</label>
-                    <input type="password" name="passwd" class="form-control" required="required">
+                    <input type="password" name="passwd" class="form-control" required="required"
+                           pattern=".{8,}" 
+                           title="Пароль должен содержать минимум 8 символов"
+                           autocomplete="current-password">
                 </div>
                 <div class="checkbox">
                     <label>
@@ -71,7 +85,7 @@ include BASE_PATH . '/includes/header.php';
                     <div class="alert alert-danger alert-dismissable fade in">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         <?php
-                        echo $_SESSION['login_failure'];
+                        echo htmlspecialchars($_SESSION['login_failure']);
                         unset($_SESSION['login_failure']);
                         ?>
                     </div>
@@ -81,4 +95,5 @@ include BASE_PATH . '/includes/header.php';
         </div>
     </form>
 </div>
+
 <?php include BASE_PATH . '/includes/footer.php'; ?>

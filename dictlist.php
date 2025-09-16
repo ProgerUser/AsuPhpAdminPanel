@@ -57,10 +57,10 @@ include BASE_PATH . '/includes/header.php';
 <!-- Main container -->
 <div id="page-wrapper">
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-8">
             <h1 class="page-header">Словари</h1>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div class="page-action-links text-right">
                 <a href="add_dictlist.php?operation=create" class="btn btn-success"><i
                             class="glyphicon glyphicon-plus"></i> Добавить</a>
@@ -69,48 +69,85 @@ include BASE_PATH . '/includes/header.php';
     </div>
     <?php include BASE_PATH . '/includes/flash_messages.php'; ?>
 
+    <!-- Панель действий -->
+    <div class="row" style="margin-bottom: 20px;">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body" style="padding: 15px;">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="export_dictlist.php" class="btn btn-info btn-block">
+                                <i class="glyphicon glyphicon-export"></i> Экспорт в CSV
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="add_dictlist.php?operation=create" class="btn btn-success btn-block">
+                                <i class="glyphicon glyphicon-plus"></i> Добавить словарь
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Filters -->
-    <div class="well text-center filter-form">
-        <form class="form form-inline" action="">
-            <label for="input_search">Поиск</label>
-            <input type="text" class="form-control" id="input_search" name="search_string"
-                   value="<?php echo xss_clean($search_string); ?>">
-            <label for="input_order">Сортировка</label>
-            <select name="filter_col" class="form-control">
-                <?php
-                foreach ($dictlist->setOrderingValues() as $opt_value => $opt_name):
-                    ($order_by === $opt_value) ? $selected = 'selected' : $selected = '';
-                    echo ' <option value="' . $opt_value . '" ' . $selected . '>' . $opt_name . '</option>';
-                endforeach;
-                ?>
-            </select>
-            <select name="order_by" class="form-control" id="input_order">
-                <option value="Asc" <?php
-                if ($order_by == 'Asc') {
-                    echo 'selected';
-                }
-                ?> >Asc
-                </option>
-                <option value="Desc" <?php
-                if ($order_by == 'Desc') {
-                    echo 'selected';
-                }
-                ?>>Desc
-                </option>
-            </select>
-            <input type="submit" value="Go" class="btn btn-primary">
+    <div class="well filter-form">
+        <form class="form" action="">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="input_search">Поиск</label>
+                        <input type="text" class="form-control" id="input_search" name="search_string"
+                               placeholder="Название или автор" value="<?php echo xss_clean($search_string); ?>">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="input_order">Сортировка</label>
+                        <select name="filter_col" class="form-control">
+                            <?php
+                            foreach ($dictlist->setOrderingValues() as $opt_value => $opt_name):
+                                ($order_by === $opt_value) ? $selected = 'selected' : $selected = '';
+                                echo ' <option value="' . $opt_value . '" ' . $selected . '>' . $opt_name . '</option>';
+                            endforeach;
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="input_order">Порядок</label>
+                        <select name="order_by" class="form-control" id="input_order">
+                            <option value="Asc" <?php
+                            if ($order_by == 'Asc') {
+                                echo 'selected';
+                            }
+                            ?> >Asc
+                            </option>
+                            <option value="Desc" <?php
+                            if ($order_by == 'Desc') {
+                                echo 'selected';
+                            }
+                            ?>>Desc
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <label>&nbsp;</label>
+                        <div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Применить</button>
+                            <a href="dictlist.php" class="btn btn-default" style="width: 100%; margin-top: 5px;">Сброс</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
     <hr>
     <!-- //Filters -->
-
-
-    <div id="export-section">
-        <a href="export_dictlist.php">
-            <button class="btn btn-sm btn-primary">Экспортировать в CSV <i class="glyphicon glyphicon-export"></i>
-            </button>
-        </a>
-    </div>
 
     <!-- Table -->
     <table class="table table-striped table-bordered table-condensed">
@@ -119,21 +156,29 @@ include BASE_PATH . '/includes/header.php';
             <th width="5%">ID</th>
             <th width="35%">Название</th>
             <th width="20%">Автор</th>
-            <th width="10%">Дата публикации</th>
+            <th width="10%">Год публикации</th>
             <th width="10%">Кол-во слов</th>
             <th width="10%">Действия</th>
         </tr>
         </thead>
         <tbody>
         <?php foreach ($rows as $row): ?>
-            <tr>
+            <tr id="row-<?php echo $row['id']; ?>">
                 <td><?php echo $row['id']; ?></td>
                 <td><?php echo xss_clean($row['name']); ?></td>
                 <td><?php echo xss_clean($row['dict_author']); ?></td>
                 <td><?php echo xss_clean($row['year_pub']); ?></td>
                 <td><?php echo xss_clean($row['wordcnt']); ?></td>
                 <td>
-                    <a href="edit_dictlist.php?customer_id=<?php echo $row['id']; ?>&operation=edit"
+                    <?php
+                        $return_params = $_GET;
+                        // Обязательно передаём текущую страницу
+                        $return_params['page'] = $page;
+                        $return_qs = http_build_query($return_params);
+                        $return_url = 'dictlist.php' . ($return_qs ? ('?' . $return_qs) : '') . '#row-' . $row['id'];
+                        $edit_href = 'edit_dictlist.php?customer_id=' . $row['id'] . '&operation=edit&return=' . rawurlencode($return_url);
+                    ?>
+                    <a href="<?php echo $edit_href; ?>"
                        class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
                     <a href="#" class="btn btn-danger delete_btn" data-toggle="modal"
                        data-target="#confirm-delete-<?php echo $row['id']; ?>"><i class="glyphicon glyphicon-trash"></i></a>

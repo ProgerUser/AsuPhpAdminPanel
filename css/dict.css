@@ -1,0 +1,769 @@
+/* The spacing between paragraphs (dictionary entries)
+* Отступы между абзацами (словарными статьями)
+------------------------------------------------------------*/
+.vbtugov, .mjkishmahov, .pilafishev, .neo {
+    margin: 30px 40px;
+    /*border: 1px solid red;*/
+}
+
+
+
+.tvb_awb {
+    margin-left: 0px;
+}
+
+/* grammar category block */
+.tvb_gcb {
+    margin-left: 20px;
+}
+
+/* word meaning block */
+.tvb_wmb {
+    margin-left: 40px;
+}
+
+/* samples block */
+.tvb_sb {
+    margin-left: 60px;
+}
+
+/* sample translations block */
+.tvb_st {
+    margin-left: 0px;
+}
+
+/* rhomb samples block */
+.tvb_rsb {
+    margin-left: 20px;
+}
+
+
+
+
+
+/* homonym number */
+.tvb_hn {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* homonym */
+.tvb_h {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* dialect */
+.tvb_d {
+    color: #555;
+    font-style: italic;
+}
+
+/* kind */
+.tvb_k {
+    color: maroon;
+    font-style: italic;
+}
+
+/* borrowed from russian */
+.tvb_r {
+    color: #f30;
+}
+
+/* convetntion */
+.tvb_c {
+    color: maroon;
+    font-style: italic;
+}
+
+/* origin */
+.tvb_o {
+    /*color: #0047ab;*/
+    font-size: 16px;
+}
+
+/* cross_links */
+.tvb_cl {
+    /*color: #0047ab;*/
+    font-size: 16px;
+}
+
+/* grammar_category */
+.tvb_gc {
+    font-weight: bold;
+}
+
+/* word_meaning number */
+.tvb_wmn {
+    color: #0047ab;
+}
+
+/* word_meaning comment */
+.tvb_wmc {
+    color: #555;
+    font-style: italic;
+}
+
+/* word_meaning multi_translation */
+.tvb_wmmt {
+    color: navy;
+    font-size: 16px;
+}
+
+/* translations */
+.tvb_t {
+    color: navy;
+    font-size: 16px;
+}
+
+/* translation_addition */
+.tvb_ta {
+    color: #274E9D;
+}
+
+/* translation_comment */
+.tvb_tc {
+    color: maroon;
+    font-style: italic;
+}
+
+/* translation_operand */
+.tvb_to {
+    color: #2F4E64;
+    font-style: italic;
+}
+
+/* rhomb symbol */
+.tvb_rsym {
+    font-weight: bold;
+    color: green;
+    font-size: 18px;
+}
+
+
+
+/* rhomb samples table */
+.tvb_rhs {
+    margin-left: 20px;
+}
+
+/* samples in table */
+.tvb_tr {
+    vertical-align: top;
+}
+
+.tvb_tr:hover {
+    background-color: #f7f7fa;
+}
+
+.tvb_tr td {
+    padding: 0px 5px;
+    border-left: 1px solid transparent;
+    border-bottom: 1px solid #eee;
+}
+
+.tvb_tr td:hover {
+    border-left: 1px solid #f99;
+}
+
+
+
+
+
+
+/* russian word block */
+.tvb_rwb {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* translations block */
+.tvb_tb {
+    margin-left: 20px;
+}
+
+
+
+/* translation number */
+.tvb_tn {
+    font-weight: bold;
+}
+
+/* abaza translation */
+.tvb_at {
+    font-size: 16px;
+}
+
+/* dialect */
+.tvb_d {
+    color: #555;
+    font-style: italic;
+}
+
+/* borrowed from russian */
+.tvb_r {
+    color: #f30;
+}
+
+/* convetntion */
+.tvb_c {
+    color: maroon;
+    font-style: italic;
+}
+
+/* translation addition for abaza */
+.tvb_rta {
+    margin-left: 10px;
+    font-size: 14px;
+    /*font-style: italic;*/
+}
+
+
+/* РЅР° СѓРґР°Р»РµРЅРёРµ */
+/* samples */
+/*.tvb_s {
+    margin-left: 40px;
+}*/
+
+
+/* abaza sample */
+.tvb_as {
+    /*font-weight: lighter;*/
+    color: #0047ab;
+}
+
+/* russian sample */
+.tvb_rs {
+    color: black;
+}
+
+/* Р°) Р±) РІ) ... */
+.tvb_abc {
+    color: #555;
+}
+
+/* abaza comment */
+.tvb_ac {
+    /*font-weight: lighter;*/
+    color: #0047ab;
+}
+
+/* rus translation of abaza comment */
+.tvb_act {
+    color: black;
+}
+
+/* rus clarification */
+.tvb_rc {
+    color: #696969;
+    font-style: italic;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* abaza word block */
+.lpi_awb {
+    margin-left: 0px;
+}
+
+/* russian translations block */
+.lpi_rtb {
+    margin-left: 20px;
+}
+
+/* full description block */
+.lpi_fdb {
+    margin-left: 40px;
+    text-align: justify;
+    border-left: 4px solid #eceeef;
+    padding: 5px 10px;
+}
+
+
+
+/* abaza word */
+.lpi_aw {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* red * indicates that word is borrowed from russian */
+.lpi_r {
+    color: #f30;
+}
+
+/* borrowed from russian */
+.lip_br {
+    color: #555;
+    font-style: italic;
+}
+
+/* dialect */
+.lpi_d {
+    color: gray;
+    font-size: 16px;
+}
+
+/* latin translation */
+.lpi_lt {
+    font-weight: bold;
+    color: green;
+    font-size: 16px;
+}
+
+/* link */
+.lpi_l {
+    color: #0047ab;
+    font-size: 16px;
+}
+
+/* convention */
+.lpi_c {
+    color: maroon;
+    font-style: italic
+}
+
+/* link comment */
+.lpi_lc {
+    color: #696969;
+    font-style: italic;
+}
+
+/* russian translation number */
+.lpi_rtn {
+    font-weight: bold;
+    color: #000;
+}
+
+/* russian word */
+.lpi_rw {
+    color: navy;
+    font-size: 16px;
+}
+
+/* russian addition */
+.lpi_ra {
+    color: navy;
+    font-size: 15px;
+}
+
+/* russian comment */
+.lpi_rc {
+    color: #696969;
+    font-style: italic;
+}
+
+
+
+
+/* russian word block */
+.lpi_rwb {
+    margin-left: 0px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* abaza translations block */
+.lpi_atb {
+    margin-left: 20px;
+}
+
+/* latin translation block */
+.lpi_ltb {
+    margin-left: 40px;
+}
+
+/* russian translation addition block */
+.lpi_rtab {
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+
+
+/* abaza translation number */
+.lpi_atn {
+    font-weight: bold;
+}
+
+/* abaza translation */
+.lpi_at {
+    /*color: navy;*/
+    font-size: 16px;
+}
+
+/* latin translation small size */
+.lpi_lts {
+    color: green;
+    font-size: 14px;
+}
+
+
+
+
+
+
+
+
+
+
+/* abaza word block */
+.kmj_awb {
+    margin-left: 0px;
+}
+
+/* russian translations block */
+.kmj_rtb {
+    margin-left: 20px;
+}
+
+
+
+/* abaza word  */
+.kmj_aw {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* russian translation number */
+.kmj_rtn {
+    font-weight: bold;
+}
+
+/* homonym number */
+.kmj_hn {
+    color: navy;
+    font-size: 16px;
+}
+
+/* russian translation */
+.kmj_rt {
+    color: navy;
+    font-size: 16px;
+}
+
+/* russian translation comment */
+.kmj_rtc {
+    color: #696969;
+    font-style: italic;
+}
+
+
+
+
+
+/* russian word block */
+.kmj_rwb {
+    margin-left: 0px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* abaza translations block */
+.kmj_atb {
+    margin-left: 20px;
+}
+
+/* samples block */
+.kmj_sb {
+    margin-left: 60px;
+}
+
+/* sample translations block */
+.kmj_stb {
+    margin-left: 0px;
+}
+
+
+
+
+/* russian word comment */
+.kmj_rwc {
+    font-weight: normal;
+    font-style: italic;
+    font-size: 16px;
+}
+
+/* abaza translation number */
+.kmj_atn {
+    font-weight: bold;
+}
+
+/* abaza translation */
+.kmj_at {
+    color: navy;
+    font-size: 16px;
+}
+
+/* star - borrowed from russian */
+.kmj_r {
+    color: #f30;
+}
+
+/* text - borrowed from russian */
+.kmj_bfr {
+    color: #555;
+    font-style: italic;
+}
+
+/* abaza word comment */
+.kmj_awc {
+    color: #696969;
+    font-style: italic;
+}
+
+/* affix comment */
+.kmj_af {
+    color: #696969;
+    font-style: italic;
+}
+
+/* affix */
+.kmj_a {
+    font-weight: bold;
+    color: maroon;
+}
+
+
+
+/* samples in table */
+.kmj_tr {
+    vertical-align: top;
+}
+
+.kmj_tr:hover {
+    background-color: #f7f7fa;
+}
+
+.kmj_tr td {
+    padding: 0px 5px;
+    border-left: 1px solid transparent;
+    border-bottom: 1px solid #eee;
+}
+
+.kmj_tr td:hover {
+    border-left: 1px solid #f99;
+}
+
+/* russian sample */
+.kmj_rs {
+    /*font-weight: lighter;*/
+    color: #0047ab;
+}
+
+/* abaza sample (russian sample translation) */
+.kmj_as {
+    color: black;
+}
+
+/* Р°) Р±) РІ) ... */
+.kmj_abc {
+    color: #555;
+}
+
+
+
+
+
+
+/* abaza word block */
+.neo_awb {
+    margin-left: 0px;
+}
+
+/* russian translations block */
+.neo_rtb {
+    margin-left: 20px;
+}
+
+
+
+/* abaza word  */
+.neo_aw {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* russian translation number */
+.neo_rtn {
+    font-weight: bold;
+}
+
+/* homonym number */
+.neo_hn {
+    color: navy;
+    font-size: 16px;
+}
+
+/* russian translation */
+.neo_rt {
+    color: navy;
+    font-size: 16px;
+}
+
+/* russian translation comment */
+.neo_rtc {
+    color: #696969;
+    font-style: italic;
+}
+
+
+
+
+
+
+
+
+/* russian word block */
+.neo_rwb {
+    font-weight: bold;
+    font-size: 18px;
+    margin-left: 0px;
+}
+
+/* abaza translations block */
+.neo_atb {
+    margin-left: 20px;
+}
+
+/* samples block */
+.neo_sb {
+    margin-left: 60px;
+}
+
+
+
+
+/* russian word comment */
+.neo_rwc {
+    font-weight: normal;
+    font-style: italic;
+    font-size: 16px;
+}
+
+/* abaza translation number */
+.neo_atn {
+    font-weight: bold;
+}
+
+/* abaza translation */
+.neo_at {
+    color: navy;
+    font-size: 16px;
+}
+
+/* star - borrowed from russian */
+.neo_r {
+    color: #f30;
+}
+
+/* text - borrowed from russian */
+.neo_bfr {
+    color: #555;
+    font-style: italic;
+}
+
+
+
+
+/* samples in table */
+.neo_tr {
+    vertical-align: top;
+}
+
+.neo_tr:hover {
+    background-color: #f7f7fa;
+}
+
+.neo_tr td {
+    padding: 0px 5px;
+    border-left: 1px solid transparent;
+    border-bottom: 1px solid #eee;
+}
+
+.neo_tr td:hover {
+    border-left: 1px solid #f99;
+}
+
+/* russian sample */
+.neo_rs {
+    /*font-weight: lighter;*/
+    color: #0047ab;
+}
+
+/* abaza sample (russian sample translation) */
+.neo_as {
+    color: black;
+}
+
+
+
+/* short translations block */
+.stb {
+    /*margin: 0px 40px;*/
+    margin-left: 40px;
+    margin-right: 40px;
+    position: relative;
+
+    /*border: 1px solid red;*/
+}
+
+
+
+/* settings for short translations table */
+/* short translations - table row */
+.st_tr {
+    vertical-align: top;
+}
+
+.st_tr:hover {
+    background-color: #f7f7fa;
+}
+
+.st_tr td {
+    padding: 0px 5px;
+    border-left: 1px solid transparent;
+    border-bottom: 1px solid #eee;
+}
+
+.st_tr td:hover {
+    border-left: 1px solid #f99;
+}
+
+/* short translations number */
+.st_n {
+    color: #0047ab;
+    width: 5%;
+}
+
+/* short translations abaza word */
+.st_aw {
+
+}
+
+/* short translations russian words*/
+.st_rw {
+    width: 70%;
+}
+
+
+.rus {
+    color: #9db1cc;
+}
+
+.author {
+    font-style: italic;
+    text-align: right;
+    border-bottom: 1px dotted #FFC3BA;
+    color: #f00;
+    padding: 0px 10px 10px 10px;
+
+}

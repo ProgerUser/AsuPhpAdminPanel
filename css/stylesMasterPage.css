@@ -1,0 +1,84 @@
+body {
+	padding: 100px!important; 
+	font: 300 16px tahoma;
+}
+/* mark with differing style */
+.mark {
+	font-weight: 400;
+}
+/* nav */
+.nav {
+	list-style: none;
+}
+.nav li {
+	float: left;
+	position: relative;
+	background: #34495e;
+}
+/* круглые края */
+.nav > li:first-of-type {
+	border-radius: 5px 0 0 5px;
+}
+.nav > li:last-of-type {
+	border-radius: 0 5px 5px 0;
+}
+/* блоки ссылок */
+.nav li a {
+	display: block;
+	text-decoration: none;
+	color: #fff;
+	padding: 12px;
+	border-radius: 5px;
+}
+/* выпадающее меню */
+.sub-nav {
+	position: absolute;
+	border-top: 15px solid transparent;
+	left: -9999px;
+	list-style:none;
+	padding:0;
+}
+/* make submenu reappear */
+.nav li:hover .sub-nav {
+	left: 0;
+}
+/* triangle */
+.triangle {
+	width: 0; 
+	height: 0; 
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-bottom: 10px solid #34495e;
+	position: absolute;
+	margin-top: 5px;
+	left: -9999px;
+}
+/* reappear */
+.nav li:hover .triangle {
+	left: 15px;
+}
+/* prevent multi line links */
+.sub-nav li {
+	white-space: nowrap;
+}
+/* закругленные края */
+.sub-nav > li:first-of-type {
+	border-radius: 5px 5px 0 0;
+}
+.sub-nav > li:last-of-type {
+	border-radius: 0 0 5px 5px;
+}
+/* верхний уровень при наведении */
+.nav > li:hover > a {
+	background: #2C3E50;
+	transition: background ease .5s;
+} 
+/* ссылки подменю */
+.sub-nav a {
+	font-size: 90%;
+	margin: 3px;
+	transition: background ease .3s;
+}
+.sub-nav a:hover {
+	background: #E74C3C;
+}

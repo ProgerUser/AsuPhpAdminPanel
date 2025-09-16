@@ -62,10 +62,10 @@ include BASE_PATH . '/includes/header.php';
 <!-- Main container -->
 <div id="page-wrapper">
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-8">
             <h1 class="page-header">Словари</h1>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div class="page-action-links text-right">
                 <a href="add_wordlist.php?operation=create" class="btn btn-success"><i
                             class="glyphicon glyphicon-plus"></i> Добавить</a>
@@ -74,68 +74,97 @@ include BASE_PATH . '/includes/header.php';
     </div>
     <?php include BASE_PATH . '/includes/flash_messages.php'; ?>
 
+    <!-- Панель действий -->
+    <div class="row" style="margin-bottom: 20px;">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body" style="padding: 15px;">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a href="import_word.php" class="btn btn-info btn-block">
+                                <i class="glyphicon glyphicon-import"></i> Импорт в Excel
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="export_wordlist.php" class="btn btn-info btn-block">
+                                <i class="glyphicon glyphicon-export"></i> Экспорт в CSV
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="add_wordlist.php?operation=create" class="btn btn-success btn-block">
+                                <i class="glyphicon glyphicon-plus"></i> Добавить слово
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Filters -->
-    <div class="well text-center filter-form">
-        <form class="form form-inline" action="">
-            <label for="input_search">ID Dict</label>
-            <input type="text" class="form-control" id="input_search_dict" name="srch_dict"
-                   value="<?php echo xss_clean($srch_dict); ?>">
-            <label for="input_search">Поиск</label>
-            <input type="text" class="form-control" id="input_search" name="search_string"
-                   value="<?php echo xss_clean($search_string); ?>">
-            <label for="input_order">Сортировка</label>
-            <select name="filter_col" class="form-control">
-                <?php
-                foreach ($wordlist->setOrderingValues() as $opt_value => $opt_name):
-                    ($order_by === $opt_value) ? $selected = 'selected' : $selected = '';
-                    echo ' <option value="' . $opt_value . '" ' . $selected . '>' . $opt_name . '</option>';
-                endforeach;
-                ?>
-            </select>
-            <select name="order_by" class="form-control" id="input_order">
-                <option value="Asc" <?php
-                if ($order_by == 'Asc') {
-                    echo 'selected';
-                }
-                ?> >Asc
-                </option>
-                <option value="Desc" <?php
-                if ($order_by == 'Desc') {
-                    echo 'selected';
-                }
-                ?>>Desc
-                </option>
-            </select>
-            <input type="submit" value="Go" class="btn btn-primary">
+    <div class="well filter-form">
+        <form class="form" action="" method="get">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="input_search_dict">ID словаря</label>
+                        <input type="text" class="form-control" id="input_search_dict" name="srch_dict"
+                               placeholder="Напр.: 12" value="<?php echo xss_clean($srch_dict); ?>">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="input_search">Поиск</label>
+                        <input type="text" class="form-control" id="input_search" name="search_string"
+                               placeholder="Слово или перевод" value="<?php echo xss_clean($search_string); ?>">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="input_order">Сортировка</label>
+                        <select name="filter_col" class="form-control">
+                            <?php
+                            foreach ($wordlist->setOrderingValues() as $opt_value => $opt_name):
+                                ($order_by === $opt_value) ? $selected = 'selected' : $selected = '';
+                                echo ' <option value="' . $opt_value . '" ' . $selected . '>' . $opt_name . '</option>';
+                            endforeach;
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="input_order">Порядок</label>
+                        <select name="order_by" class="form-control" id="input_order">
+                            <option value="Asc" <?php
+                            if ($order_by == 'Asc') {
+                                echo 'selected';
+                            }
+                            ?> >Asc
+                            </option>
+                            <option value="Desc" <?php
+                            if ($order_by == 'Desc') {
+                                echo 'selected';
+                            }
+                            ?>>Desc
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <label>&nbsp;</label>
+                        <div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Применить</button>
+                            <a href="wordlist.php" class="btn btn-default" style="width: 100%; margin-top: 5px;">Сброс</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
     <hr>
     <!-- //Filters -->
-
-
-    <table class="table table-striped table-condensed">
-        <thead>
-        <tr>
-            <td>
-                <div id="import-section">
-                    <a href="import_word.php">
-                        <button class="btn btn-sm btn-primary">Импорт в Excel <i class="glyphicon glyphicon-import"></i>
-                        </button>
-                    </a>
-                </div>
-            </td>
-            <td>
-                <div id="export-section">
-                    <a href="export_wordlist.php">
-                        <button class="btn btn-sm btn-primary">Экспортировать в CSV <i
-                                    class="glyphicon glyphicon-export"></i>
-                        </button>
-                    </a>
-                </div>
-            </td>
-        </tr>
-        </thead>
-    </table>
 
 
     <!-- Table -->
@@ -152,14 +181,22 @@ include BASE_PATH . '/includes/header.php';
         </thead>
         <tbody>
         <?php foreach ($rows as $row): ?>
-            <tr>
+            <tr id="row-<?php echo $row['id']; ?>">
                 <td><?php echo $row['id']; ?></td>
                 <td><?php echo xss_clean($row['word']); ?></td>
-                <td><?php echo xss_clean($row['translate']); ?></td>
+                <td><?php echo htmlspecialchars_decode($row['translate'], ENT_QUOTES); ?></td>
                 <td><?php echo xss_clean($row['dict_ref']); ?></td>
                 <td><?php echo xss_clean($row['dict_name']); ?></td>
                 <td>
-                    <a href="edit_wordlist.php?customer_id=<?php echo $row['id']; ?>&operation=edit"
+                    <?php
+                        $return_params = $_GET;
+                        // Обязательно передаём текущую страницу
+                        $return_params['page'] = $page;
+                        $return_qs = http_build_query($return_params);
+                        $return_url = 'wordlist.php' . ($return_qs ? ('?' . $return_qs) : '') . '#row-' . $row['id'];
+                        $edit_href = 'edit_wordlist.php?customer_id=' . $row['id'] . '&operation=edit&return=' . rawurlencode($return_url);
+                    ?>
+                    <a href="<?php echo $edit_href; ?>"
                        class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
                     <a href="#" class="btn btn-danger delete_btn" data-toggle="modal"
                        data-target="#confirm-delete-<?php echo $row['id']; ?>"><i class="glyphicon glyphicon-trash"></i></a>

@@ -14,9 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $db = getDbInstance();
 
 //проверка содержимого
-/*    foreach ($data_to_store as $value) {
-        echo "$value <br>";
-    }*/
+    /*    foreach ($data_to_store as $value) {
+            echo "$value <br>";
+        }*/
 
     $last_id = $db->insert('dict_list', $data_to_store);
 

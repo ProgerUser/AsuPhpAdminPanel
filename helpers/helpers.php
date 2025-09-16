@@ -78,9 +78,9 @@ function paginationLinks($current_page, $total_pages, $base_url)
 
     if ($current_page == 1) {
 
-        $html .= '<li class="disabled"><a>First</a></li>';
+        $html .= '<li class="disabled"><a>Первая страница</a></li>';
     } else {
-        $html .= '<li><a href="' . $base_url . $http_query . '&page=1">First</a></li>';
+        $html .= '<li><a href="' . $base_url . $http_query . '&page=1">Первая страница</a></li>';
     }
 
     // Show pagination links
@@ -109,10 +109,10 @@ function paginationLinks($current_page, $total_pages, $base_url)
     }
 
     if ($current_page == $total_pages) {
-        $html .= '<li class="disabled"><a>Last</a></li>';
+        $html .= '<li class="disabled"><a>Последняя страница</a></li>';
     } else {
 
-        $html .= '<li><a href="' . $base_url . $http_query . '&page=' . $total_pages . '">Last</a></li>';
+        $html .= '<li><a href="' . $base_url . $http_query . '&page=' . $total_pages . '">Последняя страница</a></li>';
     }
 
     $html = $html . '</ul>';

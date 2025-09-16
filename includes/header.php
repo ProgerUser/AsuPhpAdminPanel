@@ -9,8 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Administrator</title>
-
+    <title>Абхазские Словари Онлайн</title>
+    <link rel="shortcut icon" href="ico/Dictionary.ico" type="image/x-icon">
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css"/>
 
@@ -19,6 +19,11 @@
 
     <!-- Custom CSS -->
     <link href="assets/css/sb-admin-2.css" rel="stylesheet">
+    <link href="vki/keyboard.css" rel="stylesheet">
+
+<!--    <link rel="stylesheet" type="text/css" href="css/dict.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">-->
+
     <!-- Custom Fonts -->
     <link href="assets/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
@@ -31,7 +36,189 @@
     <script src="assets/js/jquery.min.js" type="text/javascript"></script>
     <script src="tinymce/tinymce.min.js" referrerpolicy="origin"></script>
 
-    <script>tinymce.init({selector:'textarea',language: 'ru'});</script>
+    <script>tinymce.init({
+            selector: 'textarea',
+            language: 'ru',
+            menubar: true,
+            readonly: 1,
+            toolbar: true,
+            statusbar: true,
+        });
+        tinymce.activeEditor.setMode('design');
+    </script>
+    
+    <script>
+        // Автоматическое выделение строки при возврате с редактирования и применение темы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Применяем тему из localStorage
+            try {
+                var savedTheme = localStorage.getItem('appTheme');
+                if (savedTheme === 'dark') {
+                    document.body.classList.add('theme-dark');
+                }
+                var el = document.getElementById('themeToggleText');
+                if (el) { el.textContent = (savedTheme === 'dark') ? 'Светлая тема' : 'Тёмная тема'; }
+            } catch (e) {}
+            const hash = window.location.hash;
+            if (hash && hash.startsWith('#row-')) {
+                const rowId = hash.substring(1); // убираем #
+                const row = document.getElementById(rowId);
+                if (row) {
+                    // Добавляем класс выделения
+                    row.classList.add('row-highlighted');
+                    
+                    // Плавно прокручиваем к строке
+                    row.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center' 
+                    });
+                    
+                    // Убираем класс через 3 секунды
+                    setTimeout(function() {
+                        row.classList.remove('row-highlighted');
+                    }, 3000);
+                }
+            }
+        });
+
+        // Переключение темы
+        function toggleTheme() {
+            var isDark = document.body.classList.toggle('theme-dark');
+            try { localStorage.setItem('appTheme', isDark ? 'dark' : 'light'); } catch (e) {}
+            var el = document.getElementById('themeToggleText');
+            if (el) { el.textContent = isDark ? 'Светлая тема' : 'Тёмная тема'; }
+        }
+    </script>
+    <style>
+        @font-face {
+            font-family: PT_Sans-Web-Regular; /* Гарнитура шрифта */
+            src: url(fonts/PT_Sans-Web-Regular.ttf); /* Путь к файлу со шрифтом */
+        }
+
+        body {
+            font-family: PT_Sans-Web-Regular;
+        }
+
+        .ui-autocomplete.ui-widget {
+            font-family: PT_Sans-Web-Regular;
+        }
+
+        /* Мягкое выделение строки при возврате с редактирования */
+        .row-highlighted {
+            background-color: #f0f8ff !important;
+            border-left: 4px solid #4a90e2 !important;
+            transition: all 0.3s ease-in-out;
+            animation: highlightFade 3s ease-in-out forwards;
+        }
+
+        @keyframes highlightFade {
+            0% {
+                background-color: #e6f3ff;
+                border-left-color: #4a90e2;
+            }
+            70% {
+                background-color: #f0f8ff;
+                border-left-color: #4a90e2;
+            }
+            100% {
+                background-color: transparent;
+                border-left-color: transparent;
+            }
+        }
+
+        /* Современное оформление таблиц и форм */
+        .table {
+            border-radius: 6px;
+            overflow: hidden;
+            background-color: #fff;
+        }
+        .table > thead > tr > th {
+            background: #f7f9fc;
+            border-bottom: 1px solid #e6eaf0;
+            color: #334155;
+            font-weight: 600;
+        }
+        .table > tbody > tr:hover {
+            background-color: #fafcff;
+        }
+
+        .well.filter-form {
+            background: #f7f9fc;
+            border: 1px solid #e6eaf0;
+            border-radius: 8px;
+        }
+        .form-control {
+            border-radius: 6px;
+            border-color: #dfe3ea;
+            box-shadow: none;
+        }
+        .form-control:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79,70,229,0.15);
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            border-radius: 6px;
+        }
+        .btn-primary:hover {
+            background: #2563eb;
+            border-color: #2563eb;
+        }
+        .btn-default {
+            background: #ffffff;
+            border-color: #dfe3ea;
+            color: #334155;
+            border-radius: 6px;
+        }
+        .btn-default:hover {
+            background: #f7f9fc;
+            border-color: #cfd6e0;
+        }
+        .btn-danger {
+            background: #ef4444;
+            border-color: #ef4444;
+            border-radius: 6px;
+        }
+        .btn-danger:hover { background: #dc2626; border-color: #dc2626; }
+
+        /* Пагинация */
+        .pagination > li > a, .pagination > li > span {
+            border-color: #dfe3ea;
+            color: #334155;
+        }
+        .pagination > .active > a, .pagination > .active > span {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+        }
+
+        /* По умолчанию используем стандартные стили Bootstrap/SB Admin (светлая тема) */
+
+        /* Тёмная тема */
+        body.theme-dark { background-color: #0b1220; color: #e2e8f0; }
+        body.theme-dark #page-wrapper { background-color: #0b1220; }
+        .theme-dark .navbar-default { background-color: #0b1220; border-color: #0b1220; }
+        .theme-dark .navbar-default .navbar-brand, .theme-dark .navbar-default .navbar-nav > li > a { color: #cbd5e1; }
+        .theme-dark .navbar-default .navbar-nav > li > a:hover { color: #ffffff; }
+        .theme-dark .navbar-default.sidebar { background-color: #0b1220; }
+        .theme-dark .sidebar .nav > li > a { color: #94a3b8; }
+        .theme-dark .sidebar .nav > li > a:hover, .theme-dark .sidebar .nav > li.active > a { background: #111827; color: #e2e8f0; }
+        .theme-dark .well.filter-form { background: #0f172a; border-color: #1f2937; }
+        .theme-dark .table { background: #0f172a; }
+        .theme-dark .table > thead > tr > th { background: #101826; border-bottom-color: #1f2937; color: #e2e8f0; }
+        .theme-dark .table > tbody > tr:hover { background: #0c1424; }
+        .theme-dark .form-control { background: #111827; color: #e2e8f0; border-color: #243247; }
+        .theme-dark .form-control:focus { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.2); }
+        .theme-dark .btn-default { background: #0f172a; color: #e2e8f0; border-color: #243247; }
+        .theme-dark .btn-default:hover { background: #0c1424; }
+        .theme-dark .row-highlighted { background-color: #0c1424 !important; border-left-color: #60a5fa !important; }
+        .theme-dark .btn-primary { background: #2563eb; border-color: #2563eb; }
+        .theme-dark .btn-primary:hover { background: #1d4ed8; border-color: #1d4ed8; }
+        .theme-dark .btn-danger { background: #dc2626; border-color: #dc2626; }
+        .theme-dark .pagination > .active > a, .theme-dark .pagination > .active > span { background-color: #2563eb; border-color: #2563eb; }
+
+    </style>
 </head>
 
 <body>
@@ -53,6 +240,11 @@
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
+                <li>
+                    <a href="#" onclick="toggleTheme(); return false;">
+                        <i class="fa fa-adjust"></i> <span id="themeToggleText">Тёмная тема</span>
+                    </a>
+                </li>
                 <!-- /.dropdown -->
 
                 <!-- /.dropdown -->
@@ -78,6 +270,7 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
+
                         <li>
                             <a href="index.php"><i class="fa fa-dashboard fa-fw"></i> Главная</a>
                         </li>
@@ -114,6 +307,14 @@
                 <!-- /.sidebar-collapse -->
             </div>
             <!-- /.navbar-static-side -->
+        </nav>
+    <?php else: ?>
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <a class="navbar-brand">
+                    <img src="ico/gerb.svg" width="50px" hei>
+                </a>
+            </div>
         </nav>
     <?php endif; ?>
     <!-- The End of the Header -->

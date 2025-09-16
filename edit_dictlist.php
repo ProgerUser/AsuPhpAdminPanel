@@ -1,5 +1,5 @@
 <?php
-session_start();
+if (session_status() !== PHP_SESSION_ACTIVE) { session_start(); }
 require_once './config/config.php';
 require_once 'includes/auth_validate.php';
 
@@ -25,8 +25,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($stat) {
         $_SESSION['success'] = "Строка успешно обновлена!";
-        //Redirect to the listing page,
-        header('location: dictlist.php');
+        //Redirect back to the originating page/row if provided
+        $return = filter_input(INPUT_GET, 'return', FILTER_UNSAFE_RAW);
+        if ($return) {
+            header('Location: ' . $return);
+        } else {
+            header('Location: dictlist.php#row-' . urlencode($dictlist_id));
+        }
         //Important! Don't execute the rest put the exit/die. 
         exit();
     }else{
