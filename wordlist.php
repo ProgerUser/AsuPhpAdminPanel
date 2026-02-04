@@ -82,7 +82,7 @@ include BASE_PATH . '/includes/header.php';
                     <div class="row">
                         <div class="col-md-4">
                             <a href="import_word.php" class="btn btn-info btn-block">
-                                <i class="glyphicon glyphicon-import"></i> Импорт в Excel
+                                <i class="glyphicon glyphicon-import"></i> Импорт из Excel
                             </a>
                         </div>
                         <div class="col-md-4">
@@ -151,7 +151,7 @@ include BASE_PATH . '/includes/header.php';
                         </select>
                     </div>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-2">
                     <div class="form-group">
                         <label>&nbsp;</label>
                         <div>
@@ -235,6 +235,36 @@ include BASE_PATH . '/includes/header.php';
         <?php echo paginationLinks($page, $total_pages, 'wordlist.php'); ?>
     </div>
     <!-- //Pagination -->
+<script>
+// Автодополнение для поля поиска
+(function(){
+    if (typeof $ !== 'undefined' && typeof $.fn.autocomplete !== 'undefined') {
+        $('#input_search').autocomplete({
+            minLength: 2,
+            delay: 150,
+            source: function(request, response){
+                $.getJSON('search_word_suggest.php', { term: request.term }, function(data){
+                    response($.map(data, function(item){
+                        return {
+                            label: item.label,
+                            value: item.value,
+                            dict_name: item.dict_name || '',
+                            dict_author: item.dict_author || ''
+                        };
+                    }));
+                });
+            },
+            position: { my: 'left top+6', at: 'left bottom', of: '#input_search' }
+        }).autocomplete('instance')._renderItem = function(ul, item) {
+            var dn = item.dict_name ? ('<div class="sugg-dict">' + $('<div>').text(item.dict_name).html() + '</div>') : '';
+            var da = item.dict_author ? ('<div class="sugg-author">' + $('<div>').text(item.dict_author).html() + '</div>') : '';
+            var word = $('<div>').text(item.label).html();
+            var html = '<div class="sugg-item"><div class="sugg-word">' + word + '</div>' + dn + da + '</div>';
+            return $('<li class="sugg-li">').append(html).appendTo(ul);
+        };
+    }
+})();
+</script>
 </div>
 <!-- //Main container -->
 <?php include BASE_PATH . '/includes/footer.php'; ?>

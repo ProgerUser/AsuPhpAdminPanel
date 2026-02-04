@@ -5,6 +5,7 @@
 require_once dirname(__DIR__) . '/config/session_init.php'; // Сначала настройки сессии
 require_once dirname(__DIR__) . '/config/config.php';       // Потом конфиг
 require_once dirname(__DIR__) . '/config/security.php';     // Потом безопасность
+require_once dirname(__DIR__) . '/app/Modules/AccessControl/AccessControl.php';
 
 // Инициализируем систему безопасности
 $security = initSecurity();
@@ -23,6 +24,13 @@ if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== TRUE)
 
     header('Location: login.php');
     exit();
+}
+
+// Контроль доступа к страницам по группам/времени/дням
+$current_page = basename($_SERVER['SCRIPT_NAME']);
+if (!ac_canAccessPage($_SESSION['user_id'], $current_page)) {
+    http_response_code(403);
+    exit('Доступ ограничен политикой группы');
 }
 
 // Проверка remember me cookie

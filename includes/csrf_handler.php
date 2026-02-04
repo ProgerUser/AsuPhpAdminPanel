@@ -3,6 +3,7 @@ require_once 'config/config.php';
 require_once 'config/security.php';
 
 class CSRFHandler {
+    private $logger; // Добавляем свойство для логгера
     private static $instance = null;
     private $token_length = 32;
     private $token_name = 'csrf_token';
@@ -13,6 +14,8 @@ class CSRFHandler {
 
     private function __construct() {
         $this->token_salt = bin2hex(random_bytes(16));
+        global $logger; // Получаем глобальный логгер
+        $this->logger = $logger;
     }
 
     public static function getInstance() {
@@ -37,7 +40,7 @@ class CSRFHandler {
             
             return $token;
         } catch (Exception $e) {
-            $logger->log('Token generation failed', 'ERROR', [
+            $this->logger->log('Token generation failed', 'ERROR', [
                 'error' => $e->getMessage()
             ]);
             throw $e;
@@ -65,7 +68,7 @@ class CSRFHandler {
             
             return true;
         } catch (Exception $e) {
-            $logger->log('Token validation failed', 'ERROR', [
+            $this->logger->log('Token validation failed', 'ERROR', [
                 'error' => $e->getMessage()
             ]);
             return false;
@@ -177,10 +180,6 @@ class CSRFHandler {
         return $this->token_length;
     }
 
-    public function getTokenName() {
-        return $this->token_name;
-    }
-
     public function getTokenExpire() {
         return $this->token_expire;
     }
@@ -200,13 +199,13 @@ class CSRFHandler {
     public function requireToken() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!isset($_POST[$this->token_name])) {
-                $logger->log('CSRF token missing', 'ERROR');
+                $this->logger->log('CSRF token missing', 'ERROR');
                 http_response_code(403);
                 die('Invalid request');
             }
             
             if (!$this->validateToken($_POST[$this->token_name])) {
-                $logger->log('CSRF token validation failed', 'ERROR');
+                $this->logger->log('CSRF token validation failed', 'ERROR');
                 http_response_code(403);
                 die('Invalid request');
             }

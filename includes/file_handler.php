@@ -2,6 +2,10 @@
 require_once 'config/config.php';
 require_once 'config/security.php';
 
+// Инициализируем систему безопасности
+$security = initSecurity();
+$logger = $security['logger'];
+
 class FileHandler {
     private static $instance = null;
     private $allowed_types = [
@@ -19,6 +23,8 @@ class FileHandler {
 
     private function __construct() {
         $this->createDirectories();
+        global $logger; // Получаем глобальный логгер
+        $this->logger = $logger;
     }
 
     public static function getInstance() {
@@ -59,14 +65,14 @@ class FileHandler {
 
             chmod($upload_path, 0644);
 
-            $logger->log('File uploaded successfully', 'INFO', [
+            $this->logger->log('File uploaded successfully', 'INFO', [
                 'filename' => $filename,
                 'path' => $upload_path
             ]);
 
             return $filename;
         } catch (Exception $e) {
-            $logger->log('File upload failed', 'ERROR', [
+            $this->logger->log('File upload failed', 'ERROR', [
                 'error' => $e->getMessage(),
                 'file' => $file['name']
             ]);
@@ -86,14 +92,14 @@ class FileHandler {
                 throw new Exception('Failed to delete file');
             }
 
-            $logger->log('File deleted successfully', 'INFO', [
+            $this->logger->log('File deleted successfully', 'INFO', [
                 'filename' => $filename,
                 'path' => $file_path
             ]);
 
             return true;
         } catch (Exception $e) {
-            $logger->log('File deletion failed', 'ERROR', [
+            $this->logger->log('File deletion failed', 'ERROR', [
                 'error' => $e->getMessage(),
                 'filename' => $filename
             ]);
@@ -114,14 +120,14 @@ class FileHandler {
                 throw new Exception('Failed to move file');
             }
 
-            $logger->log('File moved successfully', 'INFO', [
+            $this->logger->log('File moved successfully', 'INFO', [
                 'source' => $source,
                 'destination' => $destination
             ]);
 
             return true;
         } catch (Exception $e) {
-            $logger->log('File move failed', 'ERROR', [
+            $this->logger->log('File move failed', 'ERROR', [
                 'error' => $e->getMessage(),
                 'source' => $source,
                 'destination' => $destination
@@ -145,14 +151,14 @@ class FileHandler {
 
             chmod($dest_path, 0644);
 
-            $logger->log('File copied successfully', 'INFO', [
+            $this->logger->log('File copied successfully', 'INFO', [
                 'source' => $source,
                 'destination' => $destination
             ]);
 
             return true;
         } catch (Exception $e) {
-            $logger->log('File copy failed', 'ERROR', [
+            $this->logger->log('File copy failed', 'ERROR', [
                 'error' => $e->getMessage(),
                 'source' => $source,
                 'destination' => $destination
@@ -260,7 +266,7 @@ class FileHandler {
 
             return $files;
         } catch (Exception $e) {
-            $logger->log('Directory scan failed', 'ERROR', [
+            $this->logger->log('Directory scan failed', 'ERROR', [
                 'error' => $e->getMessage(),
                 'directory' => $dir
             ]);
@@ -281,7 +287,7 @@ class FileHandler {
 
             return $filename;
         } catch (Exception $e) {
-            $logger->log('Temporary file creation failed', 'ERROR', [
+            $this->logger->log('Temporary file creation failed', 'ERROR', [
                 'error' => $e->getMessage()
             ]);
             throw $e;
@@ -304,9 +310,9 @@ class FileHandler {
                 }
             }
 
-            $logger->log('Temporary files cleaned up', 'INFO');
+            $this->logger->log('Temporary files cleaned up', 'INFO');
         } catch (Exception $e) {
-            $logger->log('Temporary files cleanup failed', 'ERROR', [
+            $this->logger->log('Temporary files cleanup failed', 'ERROR', [
                 'error' => $e->getMessage()
             ]);
             throw $e;

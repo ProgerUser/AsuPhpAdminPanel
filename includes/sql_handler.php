@@ -2,7 +2,11 @@
 require_once 'config/config.php';
 require_once 'config/security.php';
 
+// Инициализируем систему безопасности
+$security = initSecurity();
+$logger = $security['logger'];
 class SQLHandler {
+    private $logger; // Добавляем свойство для логгера
     private static $instance = null;
     private $pdo;
     private $prepared_statements = [];
@@ -20,8 +24,11 @@ class SQLHandler {
                 PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci"
             ];
             
-            $this->pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
-            
+            $this->pdo = new PDO($dsn, DB_USER, DB_PASSWORD, $options);
+
+            global $logger; // Получаем глобальный логгер
+            $this->logger = $logger;
+
             $logger->log('Database connection established', 'INFO');
         } catch (PDOException $e) {
             $logger->log('Database connection failed', 'ERROR', [
@@ -91,7 +98,7 @@ class SQLHandler {
             
             return $this->pdo->lastInsertId();
         } catch (PDOException $e) {
-            $logger->log('Insert operation failed', 'ERROR', [
+            $this->logger->log('Insert operation failed', 'ERROR', [
                 'table' => $table,
                 'data' => $data,
                 'error' => $e->getMessage()
@@ -112,7 +119,7 @@ class SQLHandler {
             
             return $this->query($sql, $params)->rowCount();
         } catch (PDOException $e) {
-            $logger->log('Update operation failed', 'ERROR', [
+            $this->logger->log('Update operation failed', 'ERROR', [
                 'table' => $table,
                 'data' => $data,
                 'where' => $where,
@@ -127,7 +134,7 @@ class SQLHandler {
             $sql = "DELETE FROM {$table} WHERE {$where}";
             return $this->query($sql, $params)->rowCount();
         } catch (PDOException $e) {
-            $logger->log('Delete operation failed', 'ERROR', [
+            $this->logger->log('Delete operation failed', 'ERROR', [
                 'table' => $table,
                 'where' => $where,
                 'error' => $e->getMessage()
@@ -142,10 +149,10 @@ class SQLHandler {
                 $this->pdo->beginTransaction();
             }
             $this->transaction_level++;
-            
-            $logger->log('Transaction started', 'INFO');
+
+            $this->logger->log('Transaction started', 'INFO');
         } catch (PDOException $e) {
-            $logger->log('Transaction start failed', 'ERROR', [
+            $this->logger->log('Transaction start failed', 'ERROR', [
                 'error' => $e->getMessage()
             ]);
             throw $e;
@@ -157,11 +164,11 @@ class SQLHandler {
             $this->transaction_level--;
             if ($this->transaction_level === 0) {
                 $this->pdo->commit();
-                $logger->log('Transaction committed', 'INFO');
+                $this->logger->log('Transaction committed', 'INFO');
             }
         } catch (PDOException $e) {
             $this->rollback();
-            $logger->log('Transaction commit failed', 'ERROR', [
+            $this->logger->log('Transaction commit failed', 'ERROR', [
                 'error' => $e->getMessage()
             ]);
             throw $e;
@@ -173,10 +180,10 @@ class SQLHandler {
             if ($this->transaction_level > 0) {
                 $this->pdo->rollBack();
                 $this->transaction_level = 0;
-                $logger->log('Transaction rolled back', 'INFO');
+                $this->logger->log('Transaction rolled back', 'INFO');
             }
         } catch (PDOException $e) {
-            $logger->log('Transaction rollback failed', 'ERROR', [
+            $this->logger->log('Transaction rollback failed', 'ERROR', [
                 'error' => $e->getMessage()
             ]);
             throw $e;

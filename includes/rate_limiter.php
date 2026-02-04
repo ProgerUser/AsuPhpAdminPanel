@@ -4,6 +4,7 @@ require_once 'config/security.php';
 
 $security = initSecurity();
 $logger = $security['logger'];
+
 class RateLimiter {
     private static $instance = null;
     private $limits = [
@@ -24,7 +25,10 @@ class RateLimiter {
     private $cleanup_interval = 3600; // 1 час
     private $last_cleanup = 0;
 
-    private function __construct() {}
+    private function __construct() {
+        global $logger; // Получаем глобальный логгер
+        $this->logger = $logger;
+    }
 
     public static function getInstance() {
         if (self::$instance === null) {
@@ -62,7 +66,7 @@ class RateLimiter {
 
             // Проверка количества запросов
             if (count($this->storage[$key]['requests']) >= $limit['requests']) {
-                $logger->log('Rate limit exceeded', 'WARNING', [
+                $this->logger->log('Rate limit exceeded', 'WARNING', [
                     'key' => $key,
                     'type' => $type,
                     'requests' => count($this->storage[$key]['requests'])
@@ -75,7 +79,7 @@ class RateLimiter {
 
             return true;
         } catch (Exception $e) {
-            $logger->log('Rate limit check failed', 'ERROR', [
+            $this->logger->log('Rate limit check failed', 'ERROR', [
                 'error' => $e->getMessage(),
                 'key' => $key,
                 'type' => $type
@@ -123,10 +127,10 @@ class RateLimiter {
         try {
             if (isset($this->storage[$key])) {
                 unset($this->storage[$key]);
-                $logger->log('Rate limit reset', 'INFO', ['key' => $key]);
+                $this->logger->log('Rate limit reset', 'INFO', ['key' => $key]);
             }
         } catch (Exception $e) {
-            $logger->log('Rate limit reset failed', 'ERROR', [
+            $this->logger->log('Rate limit reset failed', 'ERROR', [
                 'error' => $e->getMessage(),
                 'key' => $key
             ]);
@@ -165,11 +169,11 @@ class RateLimiter {
 
             $this->last_cleanup = $now;
 
-            $logger->log('Rate limit storage cleaned up', 'INFO', [
+            $this->logger->log('Rate limit storage cleaned up', 'INFO', [
                 'entries' => count($this->storage)
             ]);
         } catch (Exception $e) {
-            $logger->log('Rate limit cleanup failed', 'ERROR', [
+            $this->logger->log('Rate limit cleanup failed', 'ERROR', [
                 'error' => $e->getMessage()
             ]);
             throw $e;

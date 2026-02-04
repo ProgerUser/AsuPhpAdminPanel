@@ -1,6 +1,6 @@
 <?php
-require_once dirname(__DIR__) . '/config/config.php';
-require_once dirname(__DIR__) . '/config/security.php';
+require_once 'config/config.php';
+require_once 'config/security.php';
 
 class SecurityHeaders {
     private static $instance = null;
@@ -44,8 +44,11 @@ class SecurityHeaders {
             header_remove('X-AspNet-Version');
             header_remove('X-AspNetMvc-Version');
 
-            // Логгер не обязателен; избегаем использования неинициализированных переменных
+            $logger->log('Security headers sent', 'INFO');
         } catch (Exception $e) {
+            $logger->log('Failed to send security headers', 'ERROR', [
+                'error' => $e->getMessage()
+            ]);
             throw $e;
         }
     }

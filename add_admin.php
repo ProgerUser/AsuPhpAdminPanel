@@ -1,5 +1,5 @@
 <?php
-if (session_status() !== PHP_SESSION_ACTIVE) { session_start(); }
+session_start();
 require_once 'config/config.php';
 require_once 'config/security.php';
 require_once BASE_PATH . '/includes/auth_validate.php';
@@ -60,9 +60,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $db = getDbInstance();
             
             // Проверка существования пользователя
-            $db->where('user_name', $username);
-            $existing = $db->getOne('admin_accounts', 'id');
-            if ($existing) {
+            $stmt = $db->prepare("SELECT id FROM admin_accounts WHERE user_name = ?");
+            $stmt->bind_param('s', $username);
+            $stmt->execute();
+            if ($stmt->get_result()->num_rows > 0) {
                 throw new Exception("Пользователь с таким именем уже существует");
             }
             
@@ -70,13 +71,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             
             // Добавление пользователя
-            $insertId = $db->insert('admin_accounts', [
-                'user_name' => $username,
-                'password' => $hashed_password,
-                'admin_type' => $admin_type
-            ]);
+            $stmt = $db->prepare("INSERT INTO admin_accounts (user_name, password, admin_type) VALUES (?, ?, ?)");
+            $stmt->bind_param('sss', $username, $hashed_password, $admin_type);
+            $stmt->execute();
             
-            if ($insertId) {
+            if ($stmt->affected_rows > 0) {
                 $logger->log('New admin created', 'INFO', [
                     'created_by' => $_SESSION['user_id'],
                     'username' => $username,

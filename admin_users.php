@@ -43,6 +43,7 @@ if (!in_array($order_by, $allowed_order)) {
 
 try {
     $db = getDbInstance();
+    $userPerms = ac_userPermissions($_SESSION['user_id']);
     
     // Построение запроса через MysqliDb
     if ($search_string) {

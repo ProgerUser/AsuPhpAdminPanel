@@ -134,7 +134,7 @@ include BASE_PATH . '/includes/header.php';
                         </select>
                     </div>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-2">
                     <div class="form-group">
                         <label>&nbsp;</label>
                         <div>

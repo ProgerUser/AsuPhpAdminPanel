@@ -20,6 +20,7 @@
     <!-- Custom CSS -->
     <link href="assets/css/sb-admin-2.css" rel="stylesheet">
     <link href="vki/keyboard.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/jquery-ui.min.css"/>
 
 <!--    <link rel="stylesheet" type="text/css" href="css/dict.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">-->
@@ -35,6 +36,7 @@
     <![endif]-->
     <script src="assets/js/jquery.min.js" type="text/javascript"></script>
     <script src="tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="js/jquery-ui.min.js" type="text/javascript"></script>
 
     <script>tinymce.init({
             selector: 'textarea',
@@ -73,10 +75,10 @@
                         block: 'center' 
                     });
                     
-                    // Убираем класс через 3 секунды
+                    // Оставляем подсветку подольше, чтобы было заметно
                     setTimeout(function() {
                         row.classList.remove('row-highlighted');
-                    }, 3000);
+                    }, 20000);
                 }
             }
         });
@@ -103,27 +105,43 @@
             font-family: PT_Sans-Web-Regular;
         }
 
-        /* Мягкое выделение строки при возврате с редактирования */
-        .row-highlighted {
-            background-color: #f0f8ff !important;
-            border-left: 4px solid #4a90e2 !important;
-            transition: all 0.3s ease-in-out;
-            animation: highlightFade 3s ease-in-out forwards;
+        /* Поверх навигации/панелей для подсказок */
+        .ui-autocomplete {
+            z-index: 3000 !important;
+            max-height: 260px;
+            overflow-y: auto;
+            border-radius: 6px;
+            padding: 4px 0;
+        }
+        .ui-autocomplete .sugg-li { padding: 6px 12px; border-bottom: 1px solid #e6eaf0; }
+        .ui-autocomplete .sugg-li:last-child { border-bottom: none; }
+        .ui-autocomplete .sugg-item { line-height: 1.2; }
+        .ui-autocomplete .sugg-word { font-weight: 600; color: #111827; }
+        .ui-autocomplete .sugg-dict { color: #475569; font-size: 12px; }
+        .ui-autocomplete .sugg-author { color: #64748b; font-size: 12px; }
         }
 
-        @keyframes highlightFade {
-            0% {
-                background-color: #e6f3ff;
-                border-left-color: #4a90e2;
-            }
-            70% {
-                background-color: #f0f8ff;
-                border-left-color: #4a90e2;
-            }
-            100% {
-                background-color: transparent;
-                border-left-color: transparent;
-            }
+        /* Выделение изменённой строки: мягкое, но заметное */
+        .row-highlighted {
+            background-color: #fff3cd !important; /* тёплый мягкий жёлтый */
+            border-left: 6px solid #f59e0b !important;
+            box-shadow: inset 0 0 0 3px rgba(245, 158, 11, 0.25);
+            transition: background-color 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+            animation: highlightPulse 6s ease-in-out 1;
+        }
+        /* На таблицах у ячеек может быть свой фон — дублируем на td */
+        tr.row-highlighted > td {
+            background-color: #fff3cd !important;
+            border-top: 2px solid #f59e0b !important;
+            border-bottom: 2px solid #f59e0b !important;
+        }
+        tr.row-highlighted > td:first-child { border-left: 2px solid #f59e0b !important; }
+        tr.row-highlighted > td:last-child { border-right: 2px solid #f59e0b !important; }
+
+        @keyframes highlightPulse {
+            0% { background-color: #ffe8a3; box-shadow: inset 0 0 0 4px rgba(245,158,11,0.35); }
+            50% { background-color: #fff3cd; box-shadow: inset 0 0 0 2px rgba(245,158,11,0.2); }
+            100% { background-color: transparent; box-shadow: inset 0 0 0 0 rgba(245,158,11,0); }
         }
 
         /* Современное оформление таблиц и форм */
@@ -301,6 +319,12 @@
                         </li>
                         <li>
                             <a href="admin_users.php"><i class="fa fa-users fa-fw"></i>Пользователи</a>
+                        </li>
+                        <li>
+                            <a href="transfer_words_authors.php"><i class="fa fa-exchange fa-fw"></i>Импорт/Экспорт (слова/авторы)</a>
+                        </li>
+                        <li>
+                            <a href="groups_list.php"><i class="fa fa-lock fa-fw"></i>Группы доступа</a>
                         </li>
                     </ul>
                 </div>
